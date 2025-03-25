@@ -21,7 +21,7 @@ export default function DownloadPage() {
         </p>
       </div>
 
-      <Tabs defaultValue="windows" className="max-w-4xl flex items-center ">
+      <Tabs defaultValue="windows" className="max-w-4xl flex items-center mx-auto">
         <TabsList className="grid grid-cols-3 mb-8 mx-auto">
           <TabsTrigger value="windows">Windows</TabsTrigger>
           <TabsTrigger value="macos">macOS</TabsTrigger>
@@ -29,7 +29,7 @@ export default function DownloadPage() {
         </TabsList>
 
         <TabsContent value="windows" className="space-y-8">
-          <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-6 md:grid-cols-2 ">
             <Card>
               <CardHeader>
                 <CardTitle>Executable (Recommended)</CardTitle>
