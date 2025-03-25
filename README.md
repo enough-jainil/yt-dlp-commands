@@ -1,41 +1,60 @@
 # YT-DLP Command Generator
 
-A modern, user-friendly web interface for generating [yt-dlp](https://github.com/yt-dlp/yt-dlp) commands. This tool helps you create complex yt-dlp commands with a simple, intuitive UI without having to remember all the available options and flags.
+Preview: [YT-DLP Command Generator](https://ytdlp.toolbrew.org/)
 
-Link: [YT-DLP Command Generator](https://ytdlp.toolbrew.org/)
+## Why I Built This
 
-![YT-DLP Command Generator Screenshot](https://ytdlp.toolbrew.org/ss/home.png)
+As someone who frequently downloads videos, I got tired of constantly checking documentation and remembering complex command-line flags for yt-dlp. This tool is essentially my personal cheat sheet that I'm sharing with others who might find it useful.
 
+## What Is This?
 
-## Features
+A simple web interface that helps you generate yt-dlp commands without memorizing every single flag and option. Think of it as a "command builder" that makes downloading videos, audio, and other content easier.
 
-- **Mode-based Interface**:
-  - **URL Mode**: For downloading videos (requires URL)
-  - **Utility Mode**: For commands that don't need URLs (like --version, --update)
-  - **Info Mode**: For commands that display information (like --list-formats)
+## Quick Overview
 
-- **Comprehensive Command Options**:
-  - Support for all major yt-dlp command categories
-  - Detailed descriptions and examples for each option
-  - Organized by functional categories (video, audio, subtitles, etc.)
+- 🎥 Download videos from various platforms
+- 🎵 Extract audio
+- 📋 Generate commands quickly
+- 🛠 Handle complex download scenarios
 
-- **Smart Validation**:
-  - Real-time validation for incompatible commands
-  - Clear error messages when commands can't be used together
-  - Visual indicators for command conflicts
+## How It Works
 
-- **Command Management**:
-  - Easily add, remove, and modify command options
-  - See a live summary of selected commands
-  - Copy generated commands with one click
+1. Choose what you want to do (download video, extract audio, etc.)
+2. Select the options you need
+3. Get your complete yt-dlp command instantly
 
-- **Quick Templates**:
-  - Pre-configured templates for common tasks
-  - Best quality video download
-  - Audio extraction
-  - Playlist downloading
-  - Format listing
+## Screenshots / Preview
 
-- **Search Functionality**:
-  - Quickly find commands with the built-in search
-  - Filter by command name, flag, or description
+You can check out the live version at: [ytdlp.toolbrew.org](https://ytdlp.toolbrew.org)
+
+## Who Is This For?
+
+- People who use yt-dlp but don't want to memorize all its flags
+- Content archivists
+- Researchers
+- Anyone who needs to download online content systematically
+
+## Installation / Usage
+
+No installation needed! Just visit the website and start generating commands.
+
+If you want to run it locally:
+
+```bash
+git clone https://github.com/w3vish/ytdlp-command-generator
+cd ytdlp-command-generator
+npm install
+npm run dev
+```
+
+## A Note on Responsible Use
+
+This tool is meant to help you download content you have the rights to access. Always respect copyright and platform terms of service.
+
+## Feedback
+
+Found a bug? Have a suggestion? Feel free to open an issue on GitHub.
+
+## License
+
+MIT License
