@@ -48,15 +48,6 @@ export default function Home() {
       {/* Command Generator Section */}
       <section className="w-full py-6 md:py-10">
         <div className="container px-0 md:px-6">
-          <div className="hidden mx-auto  max-w-6xl flex-col items-center justify-center space-y-4 text-center mb-8">
-            <div className="space-y-2">
-              <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">YT-DLP Command Generator</h1>
-              <p className="mx-auto max-w-[700px] text-muted-foreground md:text-lg">
-                Generate commands for yt-dlp, a powerful command-line tool to download videos from YouTube and other
-                sites.
-              </p>
-            </div>
-          </div>
           <CommandGenerator />
         </div>
       </section>
