@@ -6,6 +6,7 @@ import { Header } from "@/components/header"
 import { Footer } from "@/components/footer"
 import ToasterClient from "@/components/toaster-client"
 import siteConfig from "@/lib/config"
+import { GoogleAnalytics } from '@next/third-parties/google'
 
 const siteFont = JetBrains_Mono({
   subsets: ["latin"],
@@ -72,6 +73,7 @@ export default function RootLayout({
   
         </ThemeProvider>
         <ToasterClient />
+        <GoogleAnalytics gaId="G-TRW3K4EK2X"/>
       </body>
     </html>
   )
