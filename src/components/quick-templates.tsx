@@ -1,14 +1,13 @@
 "use client"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { FileAudio, FileVideo, Globe, List, MessageSquare, Music, Play } from "lucide-react"
+import { FileAudio, FileMusic, FileText, FileVideo, Folder, Globe, Headphones, List, MessageSquare, Monitor, Music, Play, PlayCircle, Radio } from "lucide-react"
 import type { CommandState, QuickTemplate } from "./types"
 
 interface QuickTemplatesProps {
   onApplyTemplate: (template: CommandState) => void
 }
 
-// Templates for quick selection
 const QUICK_TEMPLATES: Record<string, QuickTemplate> = {
   bestVideo: {
     name: "Best Quality Video",
@@ -26,7 +25,7 @@ const QUICK_TEMPLATES: Record<string, QuickTemplate> = {
       "extract-audio": true,
       "audio-format": "mp3",
       "audio-quality": "0",
-      output: "%(title)s-[%(id)s]",
+      output: "%(title)s-[%(id)s].mp3",
     },
   },
   mp4Video: {
@@ -39,10 +38,18 @@ const QUICK_TEMPLATES: Record<string, QuickTemplate> = {
     },
   },
   playlistFirst5: {
-    name: "Download Videos from Playlist",
+    name: "First 5 Videos from Playlist",
     icon: <List className="h-4 w-4 mr-2" />,
     commands: {
       "playlist-items": "1-5",
+      output: "%(playlist_index)s-%(title)s-[%(id)s]",
+    },
+  },
+  playlistAll: {
+    name: "Download Full Playlist",
+    icon: <Folder className="h-4 w-4 mr-2" />,
+    commands: {
+      "yes-playlist": true,
       output: "%(playlist_index)s-%(title)s-[%(id)s]",
     },
   },
@@ -54,7 +61,7 @@ const QUICK_TEMPLATES: Record<string, QuickTemplate> = {
     },
   },
   playlistToMp3: {
-    name: "Playlist to MP3",
+    name: "Convert Playlist to MP3",
     icon: <Music className="h-4 w-4 mr-2" />,
     commands: {
       "yes-playlist": true,
@@ -74,7 +81,49 @@ const QUICK_TEMPLATES: Record<string, QuickTemplate> = {
       output: "%(title)s-[%(id)s]",
     },
   },
-}
+  allSubs: {
+    name: "Download All Available Subtitles",
+    icon: <FileText className="h-4 w-4 mr-2" />,
+    commands: {
+      "write-auto-sub": true,
+      "all-subs": true,
+      output: "%(title)s-[%(id)s]",
+    },
+  },
+  liveStreamStart: {
+    name: "Livestream from Start",
+    icon: <Radio className="h-4 w-4 mr-2" />,
+    commands: {
+      "live-from-start": true,
+      output: "%(title)s-[%(id)s]",
+    },
+  },
+  liveStreamCurrent: {
+    name: "Livestream from Current Time",
+    icon: <PlayCircle className="h-4 w-4 mr-2" />,
+    commands: {
+      "live-from-start": false,
+      output: "%(title)s-[%(id)s]",
+    },
+  },
+  onlyAudioBest: {
+    name: "Best Audio Only",
+    icon: <Headphones className="h-4 w-4 mr-2" />,
+    commands: {
+      format: "bestaudio/best",
+      output: "%(title)s-[%(id)s]",
+    },
+  },
+  specificQuality: {
+    name: "Specific Resolution (e.g., 720p, 4K)",
+    icon: <Monitor className="h-4 w-4 mr-2" />,
+    commands: {
+      format: "bestvideo[height=720]+bestaudio/best[height=720]",
+      output: "%(title)s-[%(id)s]",
+    },
+  },
+};
+
 
 export function QuickTemplates({ onApplyTemplate }: QuickTemplatesProps) {
   return (
