@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { CheckCircle2 } from "lucide-react"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import type { Command, CommandValue } from "./types"
+import type { Command, CommandValue } from "@/lib/types"
 import { useCommandGenerator } from "./use-command-generator"
 
 interface CommandInputProps {

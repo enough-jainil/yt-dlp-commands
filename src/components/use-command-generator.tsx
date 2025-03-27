@@ -3,7 +3,8 @@
 import { useState, useEffect, useMemo, useCallback } from "react"
 import { toast } from "sonner"
 import { commandData } from "@/lib/command-data"
-import type { Command, CommandMode, CommandState, CommandValue } from "./types"
+import type { Command, CommandMode, CommandState, CommandValue, LocalSettings } from "../lib/types"
+import { DEFAULT_SETTINGS } from "@/lib/constants"
 
 export function useCommandGenerator() {
   // Main state
@@ -14,6 +15,46 @@ export function useCommandGenerator() {
   const [validationErrors, setValidationErrors] = useState<string[]>([])
   const [activeCategory, setActiveCategory] = useState<string>("general")
   const [searchTerm, setSearchTerm] = useState("")
+
+  const [localSettings, setLocalSettings] = useState<LocalSettings>(() => {
+    const localStorageKey = "localSettings"
+
+    // Check if we're in browser environment
+    if (typeof window !== "undefined") {
+      try {
+        // Try to get saved settings
+        const savedSettings = localStorage.getItem(localStorageKey)
+
+        // If saved settings exist, parse and validate them
+        if (savedSettings) {
+          const parsedSettings = JSON.parse(savedSettings)
+
+          // Merge parsed settings with default settings
+          return {
+            ...DEFAULT_SETTINGS,
+            ...parsedSettings
+          }
+        }
+
+        // If no saved settings, save default settings
+        localStorage.setItem(localStorageKey, JSON.stringify(DEFAULT_SETTINGS))
+      } catch (error) {
+        console.error("Error loading settings:", error)
+      }
+    }
+
+    // Return default settings
+    return { ...DEFAULT_SETTINGS }
+  })
+
+  // Update local storage whenever settings change
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      localStorage.setItem("localSettings", JSON.stringify(localSettings))
+    }
+  }, [localSettings])
+
+
 
   // Search and filter commands
   const filteredCommands = useMemo(() => {
@@ -137,69 +178,56 @@ export function useCommandGenerator() {
 
   // Generate the command
   const generateCommand = useCallback(() => {
-    let command = "yt-dlp"
-    const selectedCommandIds = Object.keys(selectedCommands)
-    const isPowerShell = navigator.platform.toLowerCase().includes("win")
+    if (validationErrors.length > 0) return;
 
-    if (validationErrors.length > 0) {
-      return
-    }
+    let command = localSettings.ytdlpPath;
+    if (localSettings.downloadPath) selectedCommands["paths"] = localSettings.downloadPath
+    if (localSettings.ffmpegPath) selectedCommands["ffmpeg-location"] = localSettings.ffmpegPath
+
+    const selectedCommandIds = Object.keys(selectedCommands);
+    const isWindows = navigator.platform.toLowerCase().includes("win");
+    const isPowerShell = isWindows && window.navigator.userAgent.includes("PowerShell");
 
     // Mode-specific validation
     switch (mode) {
-      case "url":
-        // In URL mode, validate URL is present when required
-        if (
-          !url.trim() &&
-          selectedCommandIds.some((id) => {
-            const cmd = findCommandById(id)
-            return cmd && cmd.requiresUrl !== false
-          })
-        ) {
-          toast.error("URL is required for the selected commands")
-          return
+      case "url": {
+        const requiresUrl = selectedCommandIds.some((id) => findCommandById(id)?.requiresUrl !== false);
+        if (!url.trim() && requiresUrl) {
+          toast.error("URL is required for the selected commands");
+          return;
         }
-        break
-
-      case "utility":
-        // In utility mode, ensure no URL-dependent commands are selected
-        const urlDependentCommands = selectedCommandIds.filter((id) => {
-          const cmd = findCommandById(id)
-          return cmd && cmd.requiresUrl
-        })
-
+        break;
+      }
+      case "utility": {
+        const urlDependentCommands = selectedCommandIds.filter((id) => findCommandById(id)?.requiresUrl);
         if (urlDependentCommands.length > 0) {
           toast.error(
             `Cannot use URL-dependent commands in utility mode: ${urlDependentCommands
               .map((id) => findCommandById(id)?.name)
-              .join(", ")}`,
-          )
-          return
+              .join(", ")}`
+          );
+          return;
         }
-        break
-
-      case "info":
-        // In info mode, ensure only info commands are selected
-        const nonInfoCommands = selectedCommandIds.filter((id) => {
-          const cmd = findCommandById(id)
-          return cmd && !cmd.infoCommand
-        })
-
+        break;
+      }
+      case "info": {
+        const nonInfoCommands = selectedCommandIds.filter((id) => !findCommandById(id)?.infoCommand);
         if (nonInfoCommands.length > 0) {
           toast.error(
             `Cannot use non-info commands in info mode: ${nonInfoCommands
               .map((id) => findCommandById(id)?.name)
-              .join(", ")}`,
-          )
-          return
+              .join(", ")}`
+          );
+          return;
         }
-        break
+        break;
+      }
     }
 
-    // Add all selected commands with their values
+    // Add all selected commands
     Object.entries(selectedCommands).forEach(([commandId, value]) => {
-      const commandInfo = findCommandById(commandId)
-      if (!commandInfo) return
+      const commandInfo = findCommandById(commandId);
+      if (!commandInfo) return;
 
       // Skip commands that don't match the current mode
       if (
@@ -207,37 +235,41 @@ export function useCommandGenerator() {
         (mode === "utility" && commandInfo.requiresUrl) ||
         (mode === "info" && !commandInfo.infoCommand)
       ) {
-        return
+        return;
       }
 
       if (typeof value === "boolean" && value) {
-        command += ` ${commandInfo.flag}`
+        command += ` ${commandInfo.flag}`;
       } else if (value !== null && value !== undefined && value !== "") {
-        const containsTemplateVars = typeof value === "string" && value.includes("%(")
+        const containsTemplateVars = typeof value === "string" && value.includes("%(");
 
+        // ✅ PowerShell requires special escaping
         if (isPowerShell && containsTemplateVars) {
-          command += ` ${commandInfo.flag} '${value}'`
+          command += ` ${commandInfo.flag} "${value.replace(/"/g, '""')}"`; // Escape quotes
         } else {
-          command += ` ${commandInfo.flag} ${value}`
+          command += ` ${commandInfo.flag} "${value}"`;
         }
       }
-    })
+    });
 
-    // Add URL only in URL mode
+    // Add URL if needed
     if (mode === "url" && url.trim()) {
-      command += ` "${url}"`
+      command += ` "${url}"`;
     }
 
-    // PowerShell-specific output template formatting
+    // ✅ Fix PowerShell output template issue
     if (isPowerShell && command.includes(" -o ")) {
-      const outputMatch = command.match(/-o\s+([^'"].*?(?:%$$[^)]+$$).*?)(?:\s|$)/)
-      if (outputMatch?.[1]) {
-        command = command.replace(/-o\s+([^'"].*?(?:%$$[^)]+$$).*?)(?:\s|$)/, `-o '${outputMatch[1]}' `)
-      }
+      command = command.replace(/-o\s+([^'"].*?(?:%\([^)]+\)).*?)(?:\s|$)/, `-o "$1" `);
     }
 
-    setFinalCommand(command)
-  }, [validationErrors, mode, url, selectedCommands, findCommandById])
+    // ✅ Ensure no duplicate spaces (clean output)
+    command = command.replace(/\s+/g, " ").trim();
+
+    console.log("Generated Command:", command); // Debugging log
+
+    // Set final command
+    setFinalCommand(command);
+  }, [validationErrors, mode, url, selectedCommands, findCommandById]);
 
   // Copy to clipboard
   const copyToClipboard = useCallback(() => {
@@ -318,6 +350,8 @@ export function useCommandGenerator() {
     applyTemplate,
     copyToClipboard,
     findCommandById,
+    localSettings,
+    setLocalSettings
   }
 }
 

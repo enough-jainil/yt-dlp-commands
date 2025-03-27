@@ -5,7 +5,7 @@ import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/com
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import type { Command, CommandMode, CommandState, CommandValue } from "./types"
+import type { Command, CommandMode, CommandState, CommandValue } from "../lib/types"
 import { CommandInput } from "./command-input"
 
 interface CommandSelectorProps {

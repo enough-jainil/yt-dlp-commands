@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
 import { X } from "lucide-react"
 import { ScrollArea } from "@/components/ui/scroll-area"
-import type { CommandState, CommandValue } from "./types"
+import type { CommandState, CommandValue } from "../lib/types"
 import { useCommandGenerator } from "./use-command-generator"
 
 interface CommandSummaryProps {

@@ -12,6 +12,8 @@ import { QuickTemplates } from "./quick-templates"
 import { ModeSelector } from "./mode-selector"
 import { useCommandGenerator } from "./use-command-generator"
 import { MobileCommandBar } from "./mobile-command-bar"
+import SettingsPage from "./settings"
+import { CommandCategory } from "@/lib/command-data"
 
 export default function CommandGenerator() {
   const isMobile = useMobile()
@@ -108,7 +110,7 @@ export default function CommandGenerator() {
         {/* Command Selection */}
         <div className="md:col-span-1 lg:col-span-2 space-y-3">
           <CommandSelector
-            filteredCommands={filteredCommands}
+            filteredCommands={filteredCommands as CommandCategory}
             activeCategory={activeCategory}
             setActiveCategory={setActiveCategory}
             categories={categories}
@@ -118,6 +120,7 @@ export default function CommandGenerator() {
             handleCommandChange={handleCommandChange}
             mode={mode}
           />
+           <SettingsPage />
         </div>
 
         {/* Command Summary and Output */}

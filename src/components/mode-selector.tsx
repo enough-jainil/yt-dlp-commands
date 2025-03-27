@@ -1,7 +1,7 @@
 "use client"
 import { Download, Info, Settings } from "lucide-react"
 import { cn } from "@/lib/utils"
-import type { CommandMode, ModeConfig } from "./types"
+import type { CommandMode, ModeConfig } from "../lib/types"
 
 interface ModeSelectorProps {
   mode: CommandMode

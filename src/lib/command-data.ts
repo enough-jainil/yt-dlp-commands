@@ -1,24 +1,4 @@
-export interface CommandOption {
-  label: string
-  value: string
-}
-
-export interface Command {
-  id: string
-  name: string
-  flag: string
-  type: "boolean" | "string" | "select" | "number"
-  description?: string
-  placeholder?: string
-  example?: string
-  options?: CommandOption[]
-  min?: number
-  max?: number
-  incompatibleWith?: string[]
-  requiresUrl?: boolean
-  utilityOnly?: boolean
-  infoCommand?: boolean
-}
+import { Command } from "@/lib/types"
 
 export type CommandCategory = Record<string, Command[]>
 
@@ -1302,7 +1282,7 @@ export const commandData: CommandCategory = {
     },
     {
       id: "paths",
-      name: "Paths",
+      name: "Download Paths",
       flag: "-P",
       type: "string",
       description: "The paths where the files should be downloaded",

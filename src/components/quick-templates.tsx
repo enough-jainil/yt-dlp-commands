@@ -2,7 +2,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { FileAudio, FileText, FileVideo, Folder, Globe, Headphones, List, MessageSquare, Monitor, Music, Play, PlayCircle, Radio } from "lucide-react"
-import type { CommandState, QuickTemplate } from "./types"
+import type { CommandState, QuickTemplate } from "../lib/types"
 
 interface QuickTemplatesProps {
   onApplyTemplate: (template: CommandState) => void
