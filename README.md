@@ -1,6 +1,6 @@
 # YT-DLP Command Generator
 
-Preview: [YT-DLP Command Generator](https://ytdlp.toolbrew.org/)
+Preview: [YT-DLP Command Generator](https://toolbrew.org/)
 
 ## Why I Built This
 
@@ -25,7 +25,7 @@ A simple web interface that helps you generate yt-dlp commands without memorizin
 
 ## Screenshots / Preview
 
-You can check out the live version at: [ytdlp.toolbrew.org](https://ytdlp.toolbrew.org)
+You can check out the live version at: [ytdlp.toolbrew.org](https://toolbrew.org)
 
 ## Who Is This For?
 
