@@ -1,7 +1,7 @@
 import type { LucideIcon } from "lucide-react"
 import type { ReactNode } from "react"
 
-export type CommandMode = "url" | "utility" | "info"
+export type CommandMode = "all" |"url" | "utility" | "info"
 export type CommandDataType = "boolean" | "string" | "number" | "select" | "file"
 export type CommandValue = boolean | string | number | undefined
 

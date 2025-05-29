@@ -14,7 +14,7 @@ const QUICK_TEMPLATES: Record<string, QuickTemplate> = {
     icon: <FileVideo className="h-4 w-4 mr-2" />,
     commands: {
       format: "bestvideo+bestaudio/best",
-      output: "%(title)s-[%(id)s]",
+      // output: "%(title)s-[%(id)s]",
     },
   },
   mp3Audio: {
@@ -25,7 +25,7 @@ const QUICK_TEMPLATES: Record<string, QuickTemplate> = {
       "extract-audio": true,
       "audio-format": "mp3",
       "audio-quality": "0",
-      output: "%(title)s-[%(id)s].mp3",
+      // output: "%(title)s-[%(id)s].mp3",
     },
   },
   mp4Video: {
@@ -34,7 +34,7 @@ const QUICK_TEMPLATES: Record<string, QuickTemplate> = {
     commands: {
       format: "bestvideo[height<=1080]+bestaudio/best[height<=1080]",
       "merge-output-format": "mp4",
-      output: "%(title)s-[%(id)s]",
+      // output: "%(title)s-[%(id)s]",
     },
   },
   playlistFirst5: {
@@ -42,7 +42,7 @@ const QUICK_TEMPLATES: Record<string, QuickTemplate> = {
     icon: <List className="h-4 w-4 mr-2" />,
     commands: {
       "playlist-items": "1-5",
-      output: "%(playlist_index)s-%(title)s-[%(id)s]",
+      // output: "%(playlist_index)s-%(title)s-[%(id)s]",
     },
   },
   playlistAll: {
@@ -50,7 +50,7 @@ const QUICK_TEMPLATES: Record<string, QuickTemplate> = {
     icon: <Folder className="h-4 w-4 mr-2" />,
     commands: {
       "yes-playlist": true,
-      output: "%(playlist_index)s-%(title)s-[%(id)s]",
+      // output: "%(playlist_index)s-%(title)s-[%(id)s]",
     },
   },
   listFormats: {
@@ -69,7 +69,7 @@ const QUICK_TEMPLATES: Record<string, QuickTemplate> = {
       "extract-audio": true,
       "audio-format": "mp3",
       "audio-quality": "0",
-      output: "%(playlist_index)s-%(title)s-[%(id)s]",
+      // output: "%(playlist_index)s-%(title)s-[%(id)s]",
     },
   },
   englishSubs: {
@@ -78,7 +78,7 @@ const QUICK_TEMPLATES: Record<string, QuickTemplate> = {
     commands: {
       "write-auto-sub": true,
       "sub-lang": "en",
-      output: "%(title)s-[%(id)s]",
+      // output: "%(title)s-[%(id)s]",
     },
   },
   allSubs: {
@@ -87,7 +87,7 @@ const QUICK_TEMPLATES: Record<string, QuickTemplate> = {
     commands: {
       "write-auto-sub": true,
       "all-subs": true,
-      output: "%(title)s-[%(id)s]",
+      // output: "%(title)s-[%(id)s]",
     },
   },
   liveStreamStart: {
@@ -95,7 +95,7 @@ const QUICK_TEMPLATES: Record<string, QuickTemplate> = {
     icon: <Radio className="h-4 w-4 mr-2" />,
     commands: {
       "live-from-start": true,
-      output: "%(title)s-[%(id)s]",
+      // output: "%(title)s-[%(id)s]",
     },
   },
   liveStreamCurrent: {
@@ -103,7 +103,7 @@ const QUICK_TEMPLATES: Record<string, QuickTemplate> = {
     icon: <PlayCircle className="h-4 w-4 mr-2" />,
     commands: {
       "live-from-start": false,
-      output: "%(title)s-[%(id)s]",
+      // output: "%(title)s-[%(id)s]",
     },
   },
   onlyAudioBest: {
@@ -111,7 +111,7 @@ const QUICK_TEMPLATES: Record<string, QuickTemplate> = {
     icon: <Headphones className="h-4 w-4 mr-2" />,
     commands: {
       format: "bestaudio/best",
-      output: "%(title)s-[%(id)s]",
+      // output: "%(title)s-[%(id)s]",
     },
   },
   specificQuality: {
@@ -119,7 +119,7 @@ const QUICK_TEMPLATES: Record<string, QuickTemplate> = {
     icon: <Monitor className="h-4 w-4 mr-2" />,
     commands: {
       format: "bestvideo[height=720]+bestaudio/best[height=720]",
-      output: "%(title)s-[%(id)s]",
+      // output: "%(title)s-[%(id)s]",
     },
   },
 };

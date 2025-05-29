@@ -1,5 +1,5 @@
 "use client"
-import { Download, Info, Settings } from "lucide-react"
+import { Download, Info, Settings, Terminal } from "lucide-react"
 import { cn } from "@/lib/utils"
 import type { CommandMode, ModeConfig } from "../lib/types"
 
@@ -9,6 +9,11 @@ interface ModeSelectorProps {
 }
 
 const modeConfig: Record<CommandMode, ModeConfig> = {
+  all: {
+    icon: Terminal,
+    label: "All",
+    "description": "All Command"
+  },
   url: {
     icon: Download,
     label: "Download",
