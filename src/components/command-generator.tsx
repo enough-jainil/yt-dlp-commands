@@ -38,7 +38,7 @@ export default function CommandGenerator() {
   } = useCommandGenerator()
 
   return (
-    <div className="mx-auto py-3   pb-16 md:pb-3">
+    <div className="mx-auto py-3 pb-16 md:pb-3">
       <div>
         {/* Hero Section */}
         <div className="mx-auto px-4">
@@ -54,12 +54,12 @@ export default function CommandGenerator() {
         </div>
       </div>
 
-      {/* Show URL card only in URL mode */}
-      {mode === "url" && (
+      {/* Show URL card in URL mode and ALL mode */}
+      {(mode === "url" || mode === "all") && (
         <Card className="mb-4 p-4 border-muted">
           <div className="space-y-2">
             <Label htmlFor="url-input" className="text-sm font-medium text-foreground">
-              Enter URL
+              Enter URL {mode === "all" ? "(Optional)" : ""}
             </Label>
 
             <div className="relative flex items-center space-x-2">
@@ -86,7 +86,10 @@ export default function CommandGenerator() {
             </div>
 
             <p className="text-xs text-muted-foreground pl-1">
-              Enter a YouTube, Vimeo, or other supported platform URL
+              {mode === "all" 
+                ? "Enter a URL for download commands, or leave empty for utility/info commands only"
+                : "Enter a YouTube, Vimeo, or other supported platform URL"
+              }
             </p>
           </div>
         </Card>
@@ -168,4 +171,3 @@ export default function CommandGenerator() {
     </div>
   )
 }
-

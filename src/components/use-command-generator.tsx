@@ -136,7 +136,8 @@ export function useCommandGenerator() {
     });
 
     setMode(newMode);
-    if (newMode !== "url") {
+    // Only clear URL if switching away from modes that use URL
+    if (newMode === "utility") {
       setUrl("");
     }
   }, [findCommandById]);
@@ -211,12 +212,12 @@ export function useCommandGenerator() {
         // No specific error if URL is present unless a specific info command forbids it
         break;
       case "all":
+        // In "all" mode, we are more permissive and allow all combinations
+        // Only validate critical requirements
         if (hasCommandsThatExplicitlyNeedUrl && !url.trim()) {
           errors.push("URL is required because at least one selected command explicitly needs it.");
         }
-        // In "all" mode, we are more permissive.
-        // We don't strictly forbid mixing utilityOnly with a URL, or requiresUrl with no URL
-        // unless 'requiresUrl' is explicitly true.
+        // Allow mixing of all command types in "all" mode
         break;
     }
     setValidationErrors(errors);
@@ -258,7 +259,7 @@ export function useCommandGenerator() {
       if (mode === "info" && !commandInfo.infoCommand) {
         return;
       }
-      // No specific filtering for "all" mode here; validationErrors should catch critical issues.
+      // "all" mode includes all commands regardless of their restrictions
 
       if (typeof value === "boolean" && value) {
         commandStr += ` ${commandInfo.flag}`;
@@ -279,16 +280,11 @@ export function useCommandGenerator() {
       }
     });
 
-    // Add URL intelligently
+    // Add URL intelligently based on mode and selected commands
     const shouldAddUrl = url.trim() &&
       (
         mode === "url" ||
-        (mode === "all" && Object.keys(selectedCommands).some(id => {
-          const cmd = findCommandById(id);
-          // Add URL in "all" mode if any command is not strictly utilityOnly,
-          // or if a command explicitly requires a URL.
-          return cmd && (cmd.requiresUrl === true || cmd.utilityOnly !== true);
-        })) ||
+        mode === "all" || // Always consider URL in "all" mode if provided
         (mode === "info" && Object.keys(selectedCommands).length > 0) // Add URL for info mode if commands are selected
                                                                      // as some info commands take a URL.
       );
@@ -386,6 +382,7 @@ export function useCommandGenerator() {
                 (mode === "url" && cmd.utilityOnly === true) ||
                 (mode === "utility" && cmd.requiresUrl === true) ||
                 (mode === "info" && !cmd.infoCommand)
+                // No filtering for "all" mode - allow all commands
             ) {
                 delete newTemplateState[commandId];
             }
