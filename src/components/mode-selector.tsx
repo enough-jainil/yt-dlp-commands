@@ -33,7 +33,7 @@ const modeConfig: Record<CommandMode, ModeConfig> = {
 
 export function ModeSelector({ mode, onModeChange }: ModeSelectorProps) {
   return (
-    <div className="inline-flex items-center rounded-md border border-input bg-background p-1 text-muted-foreground shadow-sm">
+    <div className="grid grid-cols-2 lg:grid-cols-4 gap-1 items-center rounded-md border border-input bg-background p-1 text-muted-foreground shadow-sm">
       {Object.entries(modeConfig).map(([key, config]) => {
         const Icon = config.icon
         return (
