@@ -1,22 +1,22 @@
-"use client"
-import { Card } from "@/components/ui/card"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Alert, AlertDescription } from "@/components/ui/alert"
-import { AlertCircle, ClipboardCopy, RotateCw } from "lucide-react"
-import { useMobile } from "@/hooks/use-mobile"
-import { CommandSelector } from "./command-selector"
-import { CommandSummary } from "./command-summary"
-import { QuickTemplates } from "./quick-templates"
-import { ModeSelector } from "./mode-selector"
-import { useCommandGenerator } from "./use-command-generator"
-import { MobileCommandBar } from "./mobile-command-bar"
-import SettingsPage from "./settings"
-import { CommandCategory } from "@/lib/command-data"
+"use client";
+import { Card } from "@/components/ui/card";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { AlertCircle, ClipboardCopy, RotateCw } from "lucide-react";
+import { useMobile } from "@/hooks/use-mobile";
+import { CommandSelector } from "./command-selector";
+import { CommandSummary } from "./command-summary";
+import { QuickTemplates } from "./quick-templates";
+import { ModeSelector } from "./mode-selector";
+import { useCommandGenerator } from "./use-command-generator";
+import { MobileCommandBar } from "./mobile-command-bar";
+import SettingsPage from "./settings";
+import { CommandCategory } from "@/lib/command-data";
 
 export default function CommandGenerator() {
-  const isMobile = useMobile()
+  const isMobile = useMobile();
   const {
     mode,
     url,
@@ -35,10 +35,10 @@ export default function CommandGenerator() {
     clearSelections,
     applyTemplate,
     copyToClipboard,
-  } = useCommandGenerator()
+  } = useCommandGenerator();
 
   return (
-    <div className="mx-auto py-3 pb-16 md:pb-3">
+    <div className="max-w-7xl mx-auto py-3 pb-16 md:pb-3 px-4">
       <div>
         {/* Hero Section */}
         <div className="mx-auto px-4">
@@ -58,7 +58,10 @@ export default function CommandGenerator() {
       {(mode === "url" || mode === "all") && (
         <Card className="mb-4 p-4 border-muted">
           <div className="space-y-2">
-            <Label htmlFor="url-input" className="text-sm font-medium text-foreground">
+            <Label
+              htmlFor="url-input"
+              className="text-sm font-medium text-foreground"
+            >
               Enter URL {mode === "all" ? "(Optional)" : ""}
             </Label>
 
@@ -86,10 +89,9 @@ export default function CommandGenerator() {
             </div>
 
             <p className="text-xs text-muted-foreground pl-1">
-              {mode === "all" 
+              {mode === "all"
                 ? "Enter a URL for download commands, or leave empty for utility/info commands only"
-                : "Enter a YouTube, Vimeo, or other supported platform URL"
-              }
+                : "Enter a YouTube, Vimeo, or other supported platform URL"}
             </p>
           </div>
         </Card>
@@ -123,7 +125,7 @@ export default function CommandGenerator() {
             handleCommandChange={handleCommandChange}
             mode={mode}
           />
-           <SettingsPage />
+          <SettingsPage />
         </div>
 
         {/* Command Summary and Output */}
@@ -134,7 +136,12 @@ export default function CommandGenerator() {
               <div className="flex justify-between items-center">
                 <h3 className="text-sm font-semibold">Generated Command</h3>
                 {finalCommand && (
-                  <Button variant="outline" size="sm" className="h-7 px-2" onClick={copyToClipboard}>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="h-7 px-2"
+                    onClick={copyToClipboard}
+                  >
                     <ClipboardCopy className="h-4 w-4 mr-1" />
                     Copy
                   </Button>
@@ -148,7 +155,12 @@ export default function CommandGenerator() {
                 </pre>
               </div>
               {finalCommand && (
-                <Button variant="default" size="sm" className="w-full mt-2" onClick={copyToClipboard}>
+                <Button
+                  variant="default"
+                  size="sm"
+                  className="w-full mt-2"
+                  onClick={copyToClipboard}
+                >
                   <ClipboardCopy className="h-4 w-4 mr-1" />
                   Copy to Clipboard
                 </Button>
@@ -167,7 +179,11 @@ export default function CommandGenerator() {
           />
         </div>
       </div>
-      <MobileCommandBar isMobile={isMobile} finalCommand={finalCommand} copyToClipboard={copyToClipboard} />
+      <MobileCommandBar
+        isMobile={isMobile}
+        finalCommand={finalCommand}
+        copyToClipboard={copyToClipboard}
+      />
     </div>
-  )
+  );
 }
