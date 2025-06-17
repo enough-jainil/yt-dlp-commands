@@ -43,12 +43,6 @@ export interface QuickTemplate {
   commands: CommandState;
 }
 
-export interface PresetAlias {
-  name: string;
-  description: string;
-  flags: string[];
-}
-
 export interface LocalSettings {
   ytdlpPath: string;
   ffmpegPath?: string;
