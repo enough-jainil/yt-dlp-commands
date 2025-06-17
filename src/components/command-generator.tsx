@@ -13,6 +13,7 @@ import { ModeSelector } from "./mode-selector";
 import { useCommandGenerator } from "./use-command-generator";
 import { MobileCommandBar } from "./mobile-command-bar";
 import SettingsPage from "./settings";
+import { PresetSelector } from "./preset-selector";
 import { CommandCategory } from "@/lib/command-data";
 
 export default function CommandGenerator() {
@@ -34,6 +35,7 @@ export default function CommandGenerator() {
     handleModeChange,
     clearSelections,
     applyTemplate,
+    applyPreset,
     copyToClipboard,
   } = useCommandGenerator();
 
@@ -171,6 +173,9 @@ export default function CommandGenerator() {
               )}
             </div>
           </Card>
+
+          {/* Quick Presets */}
+          <PresetSelector onApplyPreset={applyPreset} />
 
           {/* Quick Templates */}
           <QuickTemplates onApplyTemplate={applyTemplate} />

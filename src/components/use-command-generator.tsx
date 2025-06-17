@@ -429,6 +429,20 @@ export function useCommandGenerator() {
     [mode, findCommandById]
   );
 
+  const applyPreset = useCallback(
+    (commands: Record<string, string | boolean>) => {
+      // Convert preset commands to CommandState format
+      const presetState: CommandState = {};
+      Object.entries(commands).forEach(([key, value]) => {
+        presetState[key] = value;
+      });
+
+      // Use the existing applyTemplate function to handle mode filtering and application
+      applyTemplate(presetState);
+    },
+    [applyTemplate]
+  );
+
   return {
     mode,
     url,
@@ -446,6 +460,7 @@ export function useCommandGenerator() {
     handleModeChange,
     clearSelections,
     applyTemplate,
+    applyPreset,
     copyToClipboard,
     findCommandById,
     localSettings,

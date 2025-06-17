@@ -24,10 +24,10 @@ export const commandData: CommandCategory = {
     },
     {
       id: "update",
-      name: "Update to latest stable version (-U)",
+      name: "Update to latest version (-U)",
       flag: "--update",
       type: "boolean",
-      description: "Update this program to the latest stable version",
+      description: "Update this program to the latest version",
       requiresUrl: false,
       utilityOnly: true,
     },
@@ -46,9 +46,9 @@ export const commandData: CommandCategory = {
       flag: "--update-to",
       type: "string",
       description:
-        'Upgrade/downgrade to a specific version. CHANNEL can be a repository as well. CHANNEL and TAG default to "stable" and "latest" respectively if omitted. Supported channels: stable, nightly, master. See "UPDATE" for details.',
+        'Upgrade/downgrade to a specific version. CHANNEL can be a repository as well. CHANNEL and TAG default to "stable" and "latest" respectively if omitted; See "UPDATE" for details. Supported channels: stable, nightly, master',
       placeholder: "[CHANNEL]@[TAG]",
-      example: "nightly@2023.03.02",
+      example: "nightly",
       requiresUrl: false,
       utilityOnly: true,
     },
@@ -170,7 +170,8 @@ export const commandData: CommandCategory = {
       name: "Clear plugin directories",
       flag: "--no-plugin-dirs",
       type: "boolean",
-      description: "Clear plugin directories to search, including defaults and those provided by previous --plugin-dirs.",
+      description:
+        "Clear plugin directories to search, including defaults and those provided by previous --plugin-dirs.",
       requiresUrl: false,
     },
     {
@@ -244,14 +245,15 @@ export const commandData: CommandCategory = {
     },
     {
       id: "no-colors", // This option is not explicitly in the help, but --color implies its opposite.
-                      // yt-dlp uses --color [auto|always|never|no_color].
-                      // This could be handled by the UI for the --color option.
-                      // For simplicity, I'm keeping it if your UI uses it.
-                      // The more accurate way is to use --color never or --color no_color.
+      // yt-dlp uses --color [auto|always|never|no_color].
+      // This could be handled by the UI for the --color option.
+      // For simplicity, I'm keeping it if your UI uses it.
+      // The more accurate way is to use --color never or --color no_color.
       name: "Disable colored output (Use --color never)",
       flag: "--no-colors", // This specific flag isn't in yt-dlp, use --color POLICY
       type: "boolean",
-      description: "Do not emit color codes in output. Better to use --color never.",
+      description:
+        "Do not emit color codes in output. Better to use --color never.",
       requiresUrl: false,
     },
     {
@@ -303,7 +305,7 @@ export const commandData: CommandCategory = {
     },
     {
       id: "force-generic-extractor", // Still in your data, but not listed in the main help options of yt-dlp.
-                                      // It might be an older or more obscure option. Keeping if intended.
+      // It might be an older or more obscure option. Keeping if intended.
       name: "Force generic extractor",
       flag: "--force-generic-extractor",
       type: "boolean",
@@ -326,7 +328,8 @@ export const commandData: CommandCategory = {
       name: "Socket timeout",
       flag: "--socket-timeout",
       type: "number",
-      description: "Time to wait before giving up on a socket connection, in seconds.",
+      description:
+        "Time to wait before giving up on a socket connection, in seconds.",
       placeholder: "SECONDS",
       min: 1,
     },
@@ -360,9 +363,30 @@ export const commandData: CommandCategory = {
       name: "Enable file:// URLs",
       flag: "--enable-file-urls",
       type: "boolean",
-      description: "Enable file:// URLs. This is disabled by default for security reasons.",
+      description:
+        "Enable file:// URLs. This is disabled by default for security reasons.",
     },
-    { // Geo-restriction options combined into Network
+    {
+      id: "impersonate",
+      name: "Impersonate client",
+      flag: "--impersonate",
+      type: "string",
+      description:
+        'Client to impersonate for requests. E.g. chrome, chrome-110, chrome:windows-10. Pass --impersonate="" to impersonate any client. Note that forcing impersonation for all requests may have a detrimental impact on download speed and stability',
+      placeholder: "CLIENT[:OS]",
+      example: "chrome:windows-10",
+    },
+    {
+      id: "list-impersonate-targets",
+      name: "List impersonate targets",
+      flag: "--list-impersonate-targets",
+      type: "boolean",
+      description: "List available clients to impersonate.",
+      requiresUrl: false,
+      infoCommand: true,
+    },
+    {
+      // Geo-restriction options combined into Network
       id: "geo-verification-proxy",
       name: "Geo verification proxy",
       flag: "--geo-verification-proxy",
@@ -378,31 +402,13 @@ export const commandData: CommandCategory = {
       flag: "--xff",
       type: "string",
       description:
-        'How to fake X-Forwarded-For HTTP header. One of "default", "never", an IP block (CIDR), or a two-letter ISO 3166-2 country code.',
+        'How to fake X-Forwarded-For HTTP header to try bypassing geographic restriction. One of "default" (only when known to be useful), "never", an IP block in CIDR notation, or a two-letter ISO 3166-2 country code',
       placeholder: "VALUE",
       example: "US", // or e.g. 1.2.3.4/24
     },
-    {
-      id: "impersonate",
-      name: "Impersonate client",
-      flag: "--impersonate",
-      type: "string",
-      description:
-        'Client to impersonate for requests. E.g. chrome, chrome-110, chrome:windows-10. Pass "" to impersonate any client. Note: may impact download speed/stability.',
-      placeholder: "CLIENT[:OS]",
-      example: "chrome:windows-10",
-    },
-    {
-      id: "list-impersonate-targets",
-      name: "List impersonate targets",
-      flag: "--list-impersonate-targets",
-      type: "boolean",
-      description: "List available clients to impersonate and exit.",
-      requiresUrl: false,
-      infoCommand: true,
-    },
   ],
-  videoSelection: [ // Renamed from 'video'
+  videoSelection: [
+    // Renamed from 'video'
     {
       id: "playlist-items",
       name: "Playlist items to download (-I)",
@@ -418,7 +424,8 @@ export const commandData: CommandCategory = {
       name: "Minimum filesize",
       flag: "--min-filesize",
       type: "string", // Size can be like 50k, 44.6M
-      description: "Abort download if filesize is smaller than SIZE (e.g. 50k or 44.6M).",
+      description:
+        "Abort download if filesize is smaller than SIZE (e.g. 50k or 44.6M).",
       placeholder: "SIZE",
       example: "50k",
     },
@@ -427,7 +434,8 @@ export const commandData: CommandCategory = {
       name: "Maximum filesize",
       flag: "--max-filesize",
       type: "string", // Size can be like 50k, 44.6M
-      description: "Abort download if filesize is larger than SIZE (e.g. 50k or 44.6M).",
+      description:
+        "Abort download if filesize is larger than SIZE (e.g. 50k or 44.6M).",
       placeholder: "SIZE",
       example: "100M",
     },
@@ -446,7 +454,8 @@ export const commandData: CommandCategory = {
       name: "Filter by upload date (on or before)",
       flag: "--datebefore",
       type: "string",
-      description: "Download only videos uploaded on or before this date. Same format as --date.",
+      description:
+        "Download only videos uploaded on or before this date. Same format as --date.",
       placeholder: "DATE",
       example: "20230101",
     },
@@ -455,7 +464,8 @@ export const commandData: CommandCategory = {
       name: "Filter by upload date (on or after)",
       flag: "--dateafter",
       type: "string",
-      description: "Download only videos uploaded on or after this date. Same format as --date.",
+      description:
+        "Download only videos uploaded on or after this date. Same format as --date.",
       placeholder: "DATE",
       example: "yesterday",
     },
@@ -482,7 +492,8 @@ export const commandData: CommandCategory = {
       name: "Break on match filters",
       flag: "--break-match-filters",
       type: "string",
-      description: 'Same as "--match-filters" but stops the download process when a video is rejected.',
+      description:
+        'Same as "--match-filters" but stops the download process when a video is rejected.',
       placeholder: "FILTER",
     },
     {
@@ -498,7 +509,8 @@ export const commandData: CommandCategory = {
       name: "Download only video (if URL is video and playlist)",
       flag: "--no-playlist",
       type: "boolean",
-      description: "Download only the video, if the URL refers to a video and a playlist.",
+      description:
+        "Download only the video, if the URL refers to a video and a playlist.",
       incompatibleWith: ["yes-playlist"],
     },
     {
@@ -506,7 +518,8 @@ export const commandData: CommandCategory = {
       name: "Download playlist (if URL is video and playlist)",
       flag: "--yes-playlist",
       type: "boolean",
-      description: "Download the playlist, if the URL refers to a video and a playlist.",
+      description:
+        "Download the playlist, if the URL refers to a video and a playlist.",
       incompatibleWith: ["no-playlist"],
     },
     {
@@ -523,7 +536,8 @@ export const commandData: CommandCategory = {
       name: "Use download archive",
       flag: "--download-archive",
       type: "string",
-      description: "Download only videos not listed in the archive file. Record IDs of downloaded videos in it.",
+      description:
+        "Download only videos not listed in the archive file. Record IDs of downloaded videos in it.",
       placeholder: "FILE",
       example: "archive.txt",
     },
@@ -549,7 +563,8 @@ export const commandData: CommandCategory = {
       name: "Break on existing in archive",
       flag: "--break-on-existing",
       type: "boolean",
-      description: "Stop download process when encountering a file that is in the archive (from --download-archive).",
+      description:
+        "Stop download process when encountering a file that is in the archive (from --download-archive).",
       incompatibleWith: ["no-break-on-existing"],
     },
     {
@@ -557,7 +572,8 @@ export const commandData: CommandCategory = {
       name: "No break on existing in archive (default)",
       flag: "--no-break-on-existing",
       type: "boolean",
-      description: "Do not stop download process when encountering a file that is in the archive (default).",
+      description:
+        "Do not stop download process when encountering a file that is in the archive (default).",
       incompatibleWith: ["break-on-existing"],
     },
     {
@@ -574,7 +590,8 @@ export const commandData: CommandCategory = {
       name: "No break per input URL (default)",
       flag: "--no-break-per-input",
       type: "boolean",
-      description: "--break-on-existing and similar options terminates the entire download queue (default).",
+      description:
+        "--break-on-existing and similar options terminates the entire download queue (default).",
       incompatibleWith: ["break-per-input"],
     },
     {
@@ -582,7 +599,8 @@ export const commandData: CommandCategory = {
       name: "Skip playlist after N errors",
       flag: "--skip-playlist-after-errors",
       type: "number",
-      description: "Number of allowed failures until the rest of the playlist is skipped.",
+      description:
+        "Number of allowed failures until the rest of the playlist is skipped.",
       placeholder: "N",
       min: 1,
     },
@@ -593,7 +611,8 @@ export const commandData: CommandCategory = {
       name: "Concurrent fragments (-N)",
       flag: "--concurrent-fragments",
       type: "number",
-      description: "Number of fragments of a dash/hlsnative video to download concurrently (default 1).",
+      description:
+        "Number of fragments of a dash/hlsnative video to download concurrently (default 1).",
       placeholder: "N",
       min: 1,
       example: "3",
@@ -603,7 +622,8 @@ export const commandData: CommandCategory = {
       name: "Download speed limit (-r)",
       flag: "--limit-rate",
       type: "string", // Can be 50K, 4.2M
-      description: "Maximum download rate in bytes per second (e.g. 50K or 4.2M).",
+      description:
+        "Maximum download rate in bytes per second (e.g. 50K or 4.2M).",
       placeholder: "RATE",
       example: "1M",
     },
@@ -631,7 +651,8 @@ export const commandData: CommandCategory = {
       name: "File access retries",
       flag: "--file-access-retries",
       type: "string",
-      description: 'Number of times to retry on file access error (default is 3), or "infinite".',
+      description:
+        'Number of times to retry on file access error (default is 3), or "infinite".',
       placeholder: "RETRIES",
       example: "3",
     },
@@ -640,7 +661,8 @@ export const commandData: CommandCategory = {
       name: "Fragment retry attempts",
       flag: "--fragment-retries",
       type: "string", // Can be number or "infinite"
-      description: 'Number of retries for a fragment (default is 10), or "infinite" (DASH, hlsnative, ISM).',
+      description:
+        'Number of retries for a fragment (default is 10), or "infinite" (DASH, hlsnative, ISM).',
       placeholder: "RETRIES",
       example: "10",
     },
@@ -650,7 +672,7 @@ export const commandData: CommandCategory = {
       flag: "--retry-sleep",
       type: "string",
       description:
-        'Time to sleep between retries (seconds), optionally prefixed by retry type (http, fragment, file_access, extractor). EXPR can be number, linear=START[:END[:STEP=1]], or exp=START[:END[:BASE=2]].',
+        "Time to sleep between retries (seconds), optionally prefixed by retry type (http, fragment, file_access, extractor). EXPR can be number, linear=START[:END[:STEP=1]], or exp=START[:END[:BASE=2]].",
       placeholder: "[TYPE:]EXPR",
       example: "fragment:exp=1:20",
     },
@@ -659,7 +681,8 @@ export const commandData: CommandCategory = {
       name: "Skip unavailable fragments (default, Alias: --no-abort-on-unavailable-fragments)",
       flag: "--skip-unavailable-fragments",
       type: "boolean",
-      description: "Skip unavailable fragments for DASH, hlsnative and ISM downloads (default).",
+      description:
+        "Skip unavailable fragments for DASH, hlsnative and ISM downloads (default).",
       incompatibleWith: ["abort-on-unavailable-fragment"],
     },
     {
@@ -675,7 +698,8 @@ export const commandData: CommandCategory = {
       name: "Keep downloaded fragments",
       flag: "--keep-fragments",
       type: "boolean",
-      description: "Keep downloaded fragments on disk after downloading is finished.",
+      description:
+        "Keep downloaded fragments on disk after downloading is finished.",
       incompatibleWith: ["no-keep-fragments"],
     },
     {
@@ -683,7 +707,8 @@ export const commandData: CommandCategory = {
       name: "Delete fragments after download (default)",
       flag: "--no-keep-fragments",
       type: "boolean",
-      description: "Delete downloaded fragments after downloading is finished (default).",
+      description:
+        "Delete downloaded fragments after downloading is finished (default).",
       incompatibleWith: ["keep-fragments"],
     },
     {
@@ -691,7 +716,8 @@ export const commandData: CommandCategory = {
       name: "Buffer size",
       flag: "--buffer-size",
       type: "string", // e.g. 1024 or 16K
-      description: "Size of download buffer (e.g. 1024 or 16K, default is 1024).",
+      description:
+        "Size of download buffer (e.g. 1024 or 16K, default is 1024).",
       placeholder: "SIZE",
       example: "16K",
     },
@@ -700,7 +726,8 @@ export const commandData: CommandCategory = {
       name: "Resize buffer automatically (default)",
       flag: "--resize-buffer",
       type: "boolean",
-      description: "The buffer size is automatically resized from an initial value of --buffer-size (default).",
+      description:
+        "The buffer size is automatically resized from an initial value of --buffer-size (default).",
       incompatibleWith: ["no-resize-buffer"],
     },
     {
@@ -743,7 +770,8 @@ export const commandData: CommandCategory = {
       name: "No lazy playlist processing (default)",
       flag: "--no-lazy-playlist",
       type: "boolean",
-      description: "Process videos in the playlist only after the entire playlist is parsed (default).",
+      description:
+        "Process videos in the playlist only after the entire playlist is parsed (default).",
       incompatibleWith: ["lazy-playlist"],
     },
     {
@@ -767,7 +795,8 @@ export const commandData: CommandCategory = {
       name: "No MPEG-TS for HLS videos (default for non-live)",
       flag: "--no-hls-use-mpegts",
       type: "boolean",
-      description: "Do not use the mpegts container for HLS videos. Default when not downloading live streams.",
+      description:
+        "Do not use the mpegts container for HLS videos. Default when not downloading live streams.",
       incompatibleWith: ["hls-use-mpegts"],
     },
     {
@@ -786,7 +815,7 @@ export const commandData: CommandCategory = {
       flag: "--downloader",
       type: "string",
       description:
-        'Name or path of external downloader. Optionally prefix by protocols (http, ftp, m3u8, dash, rstp, rtmp, mms). Supports: native, aria2c, avconv, axel, curl, ffmpeg, httpie, wget. Multiple uses for different protocols.',
+        "Name or path of external downloader. Optionally prefix by protocols (http, ftp, m3u8, dash, rstp, rtmp, mms). Supports: native, aria2c, avconv, axel, curl, ffmpeg, httpie, wget. Multiple uses for different protocols.",
       placeholder: "[PROTO:]NAME",
       example: "aria2c",
     },
@@ -796,7 +825,7 @@ export const commandData: CommandCategory = {
       flag: "--downloader-args",
       type: "string",
       description:
-        'Arguments for external downloader (NAME:ARGS). For ffmpeg, use --postprocessor-args syntax for positions. Multiple uses for different downloaders.',
+        "Arguments for external downloader (NAME:ARGS). For ffmpeg, use --postprocessor-args syntax for positions. Multiple uses for different downloaders.",
       placeholder: "NAME:ARGS",
       example: "aria2c:-x 16 -k 1M",
     },
@@ -807,7 +836,8 @@ export const commandData: CommandCategory = {
       name: "Batch file (-a)",
       flag: "--batch-file",
       type: "string",
-      description: 'File containing URLs to download ("-" for stdin), one URL per line. Comments: #, ;, ].',
+      description:
+        'File containing URLs to download ("-" for stdin), one URL per line. Comments: #, ;, ].',
       placeholder: "FILE",
       example: "urls.txt",
     },
@@ -834,7 +864,8 @@ export const commandData: CommandCategory = {
       name: "Output filename template (-o)",
       flag: "--output",
       type: "string",
-      description: 'Output filename template; see "OUTPUT TEMPLATE" for details.',
+      description:
+        'Output filename template; see "OUTPUT TEMPLATE" for details.',
       placeholder: "[TYPES:]TEMPLATE",
       example: "%(title)s [%(id)s].%(ext)s",
     },
@@ -843,7 +874,8 @@ export const commandData: CommandCategory = {
       name: "Output NA placeholder",
       flag: "--output-na-placeholder",
       type: "string",
-      description: 'Placeholder for unavailable fields in --output (default: "NA").',
+      description:
+        'Placeholder for unavailable fields in --output (default: "NA").',
       placeholder: "TEXT",
       example: "UNKNOWN",
     },
@@ -852,7 +884,8 @@ export const commandData: CommandCategory = {
       name: "Restrict filenames to ASCII",
       flag: "--restrict-filenames",
       type: "boolean",
-      description: 'Restrict filenames to only ASCII characters, and avoid "&" and spaces in filenames.',
+      description:
+        'Restrict filenames to only ASCII characters, and avoid "&" and spaces in filenames.',
       incompatibleWith: ["no-restrict-filenames"],
     },
     {
@@ -860,7 +893,8 @@ export const commandData: CommandCategory = {
       name: "Allow Unicode filenames (default)",
       flag: "--no-restrict-filenames",
       type: "boolean",
-      description: 'Allow Unicode characters, "&" and spaces in filenames (default).',
+      description:
+        'Allow Unicode characters, "&" and spaces in filenames (default).',
       incompatibleWith: ["restrict-filenames"],
     },
     {
@@ -876,7 +910,8 @@ export const commandData: CommandCategory = {
       name: "Minimal filename sanitization",
       flag: "--no-windows-filenames",
       type: "boolean",
-      description: "Sanitize filenames only minimally (default on non-Windows).",
+      description:
+        "Sanitize filenames only minimally (default on non-Windows).",
       incompatibleWith: ["windows-filenames"],
     },
     {
@@ -884,7 +919,8 @@ export const commandData: CommandCategory = {
       name: "Trim filenames length",
       flag: "--trim-filenames",
       type: "number",
-      description: "Limit the filename length (excluding extension) to the specified number of characters.",
+      description:
+        "Limit the filename length (excluding extension) to the specified number of characters.",
       placeholder: "LENGTH",
       min: 1,
     },
@@ -901,7 +937,8 @@ export const commandData: CommandCategory = {
       name: "Force overwrites",
       flag: "--force-overwrites",
       type: "boolean",
-      description: "Overwrite all video and metadata files. This option includes --no-continue.",
+      description:
+        "Overwrite all video and metadata files. This option includes --no-continue.",
       incompatibleWith: ["no-overwrites", "no-force-overwrites"],
     },
     {
@@ -909,7 +946,8 @@ export const commandData: CommandCategory = {
       name: "No force overwrites (default)",
       flag: "--no-force-overwrites",
       type: "boolean",
-      description: "Do not overwrite the video, but overwrite related files (default).",
+      description:
+        "Do not overwrite the video, but overwrite related files (default).",
       incompatibleWith: ["force-overwrites"],
     },
     {
@@ -925,7 +963,8 @@ export const commandData: CommandCategory = {
       name: "Do not resume downloads",
       flag: "--no-continue",
       type: "boolean",
-      description: "Do not resume partially downloaded fragments. If file not fragmented, restart download.",
+      description:
+        "Do not resume partially downloaded fragments. If file not fragmented, restart download.",
       incompatibleWith: ["continue"],
     },
     {
@@ -933,7 +972,8 @@ export const commandData: CommandCategory = {
       name: "Use .part files (default)",
       flag: "--part",
       type: "boolean",
-      description: "Use .part files instead of writing directly into output file (default).",
+      description:
+        "Use .part files instead of writing directly into output file (default).",
       incompatibleWith: ["no-part"],
     },
     {
@@ -949,7 +989,8 @@ export const commandData: CommandCategory = {
       name: "Set file modification time from Last-modified header (default)",
       flag: "--mtime",
       type: "boolean",
-      description: "Use the Last-modified header to set the file modification time (default).",
+      description:
+        "Use the Last-modified header to set the file modification time (default).",
       incompatibleWith: ["no-mtime"],
     },
     {
@@ -957,7 +998,8 @@ export const commandData: CommandCategory = {
       name: "Do not use Last-modified for mtime",
       flag: "--no-mtime",
       type: "boolean",
-      description: "Do not use the Last-modified header to set the file modification time.",
+      description:
+        "Do not use the Last-modified header to set the file modification time.",
       incompatibleWith: ["mtime"],
     },
     {
@@ -981,7 +1023,8 @@ export const commandData: CommandCategory = {
       name: "Write metadata to .info.json file",
       flag: "--write-info-json",
       type: "boolean",
-      description: "Write video metadata to a .info.json file (may contain personal information).",
+      description:
+        "Write video metadata to a .info.json file (may contain personal information).",
       incompatibleWith: ["no-write-info-json"],
     },
     {
@@ -1015,7 +1058,8 @@ export const commandData: CommandCategory = {
       name: "Clean info.json (default)",
       flag: "--clean-info-json",
       type: "boolean",
-      description: "Remove some internal metadata (e.g. filenames) from the infojson (default).",
+      description:
+        "Remove some internal metadata (e.g. filenames) from the infojson (default).",
       incompatibleWith: ["no-clean-info-json"],
     },
     {
@@ -1031,7 +1075,8 @@ export const commandData: CommandCategory = {
       name: "Write comments to info.json (Alias: --get-comments)",
       flag: "--write-comments",
       type: "boolean",
-      description: "Retrieve video comments to be placed in the infojson. Fetched even without this if extraction is quick.",
+      description:
+        "Retrieve video comments to be placed in the infojson. Fetched even without this if extraction is quick.",
       incompatibleWith: ["no-write-comments"],
     },
     {
@@ -1039,7 +1084,8 @@ export const commandData: CommandCategory = {
       name: "No comments unless quick (Alias: --no-get-comments)",
       flag: "--no-write-comments",
       type: "boolean",
-      description: "Do not retrieve video comments unless the extraction is known to be quick (default).",
+      description:
+        "Do not retrieve video comments unless the extraction is known to be quick (default).",
       incompatibleWith: ["write-comments"],
     },
     {
@@ -1047,7 +1093,8 @@ export const commandData: CommandCategory = {
       name: "Load info from .info.json file",
       flag: "--load-info-json",
       type: "string",
-      description: 'JSON file containing the video information (created with "--write-info-json").',
+      description:
+        'JSON file containing the video information (created with "--write-info-json").',
       placeholder: "FILE",
       example: "video_meta.json",
     },
@@ -1056,7 +1103,8 @@ export const commandData: CommandCategory = {
       name: "Cookies file",
       flag: "--cookies",
       type: "string",
-      description: "Netscape formatted file to read cookies from and dump cookie jar in.",
+      description:
+        "Netscape formatted file to read cookies from and dump cookie jar in.",
       placeholder: "FILE",
       example: "cookies.txt",
     },
@@ -1091,7 +1139,8 @@ export const commandData: CommandCategory = {
       name: "Cache directory",
       flag: "--cache-dir",
       type: "string",
-      description: "Location for yt-dlp to store some downloaded information permanently (e.g. client ids). Default ${XDG_CACHE_HOME}/yt-dlp.",
+      description:
+        "Location for yt-dlp to store some downloaded information permanently (e.g. client ids). Default ${XDG_CACHE_HOME}/yt-dlp.",
       placeholder: "DIR",
       example: "~/.cache/yt-dlp",
     },
@@ -1143,10 +1192,12 @@ export const commandData: CommandCategory = {
       name: "List available thumbnails",
       flag: "--list-thumbnails",
       type: "boolean",
-      description: "List available thumbnails of each video. Simulates unless --no-simulate is used.",
+      description:
+        "List available thumbnails of each video. Simulates unless --no-simulate is used.",
       infoCommand: true,
     },
-    { // Moved from postProcessing as it's thumbnail-specific
+    {
+      // Moved from postProcessing as it's thumbnail-specific
       id: "convert-thumbnails",
       name: "Convert thumbnails format",
       flag: "--convert-thumbnails",
@@ -1163,14 +1214,16 @@ export const commandData: CommandCategory = {
       name: "Write internet shortcut file",
       flag: "--write-link",
       type: "boolean",
-      description: "Write an internet shortcut file (.url, .webloc, or .desktop depending on platform). URL may be cached by OS.",
+      description:
+        "Write an internet shortcut file (.url, .webloc, or .desktop depending on platform). URL may be cached by OS.",
     },
     {
       id: "write-url-link",
       name: "Write .url Windows internet shortcut",
       flag: "--write-url-link",
       type: "boolean",
-      description: "Write a .url Windows internet shortcut. OS caches URL based on file path.",
+      description:
+        "Write a .url Windows internet shortcut. OS caches URL based on file path.",
     },
     {
       id: "write-webloc-link",
@@ -1187,13 +1240,15 @@ export const commandData: CommandCategory = {
       description: "Write a .desktop Linux internet shortcut.",
     },
   ],
-  verbosityAndSimulation: [ // Merged advanced and verbosity
+  verbosityAndSimulation: [
+    // Merged advanced and verbosity
     {
       id: "quiet",
       name: "Quiet mode (-q)",
       flag: "--quiet",
       type: "boolean",
-      description: "Activate quiet mode. If used with --verbose, print log to stderr.",
+      description:
+        "Activate quiet mode. If used with --verbose, print log to stderr.",
       requiresUrl: false,
       incompatibleWith: ["verbose", "no-quiet"],
     },
@@ -1219,7 +1274,8 @@ export const commandData: CommandCategory = {
       name: "Simulate download (-s)",
       flag: "--simulate",
       type: "boolean",
-      description: "Do not download the video and do not write anything to disk.",
+      description:
+        "Do not download the video and do not write anything to disk.",
       incompatibleWith: ["no-simulate"],
     },
     {
@@ -1227,7 +1283,8 @@ export const commandData: CommandCategory = {
       name: "No simulate (download even with print/list options)",
       flag: "--no-simulate",
       type: "boolean",
-      description: "Download the video even if printing/listing options are used.",
+      description:
+        "Download the video even if printing/listing options are used.",
       incompatibleWith: ["simulate"],
     },
     {
@@ -1235,7 +1292,8 @@ export const commandData: CommandCategory = {
       name: "Ignore 'No video formats' error",
       flag: "--ignore-no-formats-error",
       type: "boolean",
-      description: "Ignore 'No video formats' error. Useful for extracting metadata if videos not available (experimental).",
+      description:
+        "Ignore 'No video formats' error. Useful for extracting metadata if videos not available (experimental).",
       incompatibleWith: ["no-ignore-no-formats-error"],
     },
     {
@@ -1243,7 +1301,8 @@ export const commandData: CommandCategory = {
       name: "Error on no formats (default)",
       flag: "--no-ignore-no-formats-error",
       type: "boolean",
-      description: "Throw error when no downloadable video formats are found (default).",
+      description:
+        "Throw error when no downloadable video formats are found (default).",
       incompatibleWith: ["ignore-no-formats-error"],
     },
     {
@@ -1259,7 +1318,7 @@ export const commandData: CommandCategory = {
       flag: "--print",
       type: "string",
       description:
-        'Field name or output template to print. Optionally prefix with WHEN: (e.g., video:, after_move:). Implies --quiet. Implies --simulate unless --no-simulate or later WHEN stages are used. Multiple uses allowed.',
+        "Field name or output template to print. Optionally prefix with WHEN: (e.g., video:, after_move:). Implies --quiet. Implies --simulate unless --no-simulate or later WHEN stages are used. Multiple uses allowed.",
       placeholder: "[WHEN:]TEMPLATE",
       example: "video:%(title)s - %(duration_string)s",
     },
@@ -1269,7 +1328,7 @@ export const commandData: CommandCategory = {
       flag: "--print-to-file",
       type: "string", // Represents TEMPLATE and FILE
       description:
-        'Append given template to file. WHEN and TEMPLATE same as --print. FILE uses output template syntax. Multiple uses allowed.',
+        "Append given template to file. WHEN and TEMPLATE same as --print. FILE uses output template syntax. Multiple uses allowed.",
       placeholder: "[WHEN:]TEMPLATE FILE",
       example: "video:%(id)s output.txt",
     },
@@ -1278,7 +1337,8 @@ export const commandData: CommandCategory = {
       name: "Dump JSON information for each video (-j)",
       flag: "--dump-json",
       type: "boolean",
-      description: "Quiet, but print JSON information for each video. Simulates unless --no-simulate is used.",
+      description:
+        "Quiet, but print JSON information for each video. Simulates unless --no-simulate is used.",
       requiresUrl: false, // Can operate on infojson files
       infoCommand: true,
     },
@@ -1297,7 +1357,8 @@ export const commandData: CommandCategory = {
       name: "Force write archive entries (Alias: --force-download-archive)",
       flag: "--force-write-archive",
       type: "boolean",
-      description: "Force download archive entries to be written as far as no errors occur, even if -s or simulation is used.",
+      description:
+        "Force download archive entries to be written as far as no errors occur, even if -s or simulation is used.",
     },
     {
       id: "newline",
@@ -1362,14 +1423,16 @@ export const commandData: CommandCategory = {
       name: "Dump downloaded pages (base64)",
       flag: "--dump-pages",
       type: "boolean",
-      description: "Print downloaded pages encoded using base64 to debug problems (very verbose).",
+      description:
+        "Print downloaded pages encoded using base64 to debug problems (very verbose).",
     },
     {
       id: "write-pages",
       name: "Write intermediary pages to files",
       flag: "--write-pages",
       type: "boolean",
-      description: "Write downloaded intermediary pages to files in current directory to debug problems.",
+      description:
+        "Write downloaded intermediary pages to files in current directory to debug problems.",
     },
     {
       id: "print-traffic",
@@ -1394,7 +1457,8 @@ export const commandData: CommandCategory = {
       name: "Allow legacy server connect (insecure renegotiation)",
       flag: "--legacy-server-connect",
       type: "boolean",
-      description: "Explicitly allow HTTPS connection to servers that do not support RFC 5746 secure renegotiation.",
+      description:
+        "Explicitly allow HTTPS connection to servers that do not support RFC 5746 secure renegotiation.",
     },
     {
       id: "no-check-certificates",
@@ -1408,14 +1472,16 @@ export const commandData: CommandCategory = {
       name: "Prefer insecure connection for info (YouTube only)",
       flag: "--prefer-insecure",
       type: "boolean",
-      description: "Use an unencrypted connection to retrieve information about the video (Currently supported only for YouTube).",
+      description:
+        "Use an unencrypted connection to retrieve information about the video (Currently supported only for YouTube).",
     },
     {
       id: "add-headers", // Corrected from add-header
       name: "Add custom HTTP headers",
       flag: "--add-headers",
       type: "string",
-      description: 'Specify a custom HTTP header and its value, separated by a colon ":". You can use this option multiple times.',
+      description:
+        'Specify a custom HTTP header and its value, separated by a colon ":". You can use this option multiple times.',
       placeholder: "FIELD:VALUE",
       example: "X-MyHeader:MyValue",
     },
@@ -1424,14 +1490,16 @@ export const commandData: CommandCategory = {
       name: "Bidirectional text workaround",
       flag: "--bidi-workaround",
       type: "boolean",
-      description: "Work around terminals that lack bidirectional text support. Requires bidiv or fribidi executable in PATH.",
+      description:
+        "Work around terminals that lack bidirectional text support. Requires bidiv or fribidi executable in PATH.",
     },
     {
       id: "sleep-requests",
       name: "Sleep between requests (data extraction)",
       flag: "--sleep-requests",
       type: "number",
-      description: "Number of seconds to sleep between requests during data extraction.",
+      description:
+        "Number of seconds to sleep between requests during data extraction.",
       placeholder: "SECONDS",
       min: 0,
     },
@@ -1450,7 +1518,8 @@ export const commandData: CommandCategory = {
       name: "Maximum sleep interval",
       flag: "--max-sleep-interval",
       type: "number",
-      description: "Maximum number of seconds to sleep. Can only be used along with --sleep-interval.",
+      description:
+        "Maximum number of seconds to sleep. Can only be used along with --sleep-interval.",
       placeholder: "SECONDS",
       min: 0,
     },
@@ -1464,13 +1533,15 @@ export const commandData: CommandCategory = {
       min: 0,
     },
   ],
-  videoFormat: [ // New category for video format options
+  videoFormat: [
+    // New category for video format options
     {
       id: "format",
       name: "Video format code (-f)",
       flag: "--format",
       type: "string",
-      description: 'Video format code, see "FORMAT SELECTION" for all the info.',
+      description:
+        'Video format code, see "FORMAT SELECTION" for all the info.',
       placeholder: "FORMAT",
       example: "bestvideo[height<=1080]+bestaudio/best",
     },
@@ -1479,7 +1550,8 @@ export const commandData: CommandCategory = {
       name: "Format Sort Order (-S)",
       flag: "--format-sort",
       type: "string",
-      description: 'Sort the formats by the fields given, see "Sorting Formats" for more details.',
+      description:
+        'Sort the formats by the fields given, see "Sorting Formats" for more details.',
       placeholder: "SORTORDER",
       example: "res,fps,vcodec:vp9",
     },
@@ -1488,7 +1560,8 @@ export const commandData: CommandCategory = {
       name: "Force Format Sort (Alias: --S-force)",
       flag: "--format-sort-force",
       type: "boolean",
-      description: 'Force user specified sort order to have precedence over all fields, see "Sorting Formats" for more details.',
+      description:
+        'Force user specified sort order to have precedence over all fields, see "Sorting Formats" for more details.',
       incompatibleWith: ["no-format-sort-force"],
     },
     {
@@ -1496,7 +1569,8 @@ export const commandData: CommandCategory = {
       name: "No Force Format Sort (default)",
       flag: "--no-format-sort-force",
       type: "boolean",
-      description: "Some fields have precedence over the user specified sort order (default).",
+      description:
+        "Some fields have precedence over the user specified sort order (default).",
       incompatibleWith: ["format-sort-force"],
     },
     {
@@ -1504,7 +1578,8 @@ export const commandData: CommandCategory = {
       name: "Allow Video Multistreams",
       flag: "--video-multistreams",
       type: "boolean",
-      description: "Allow multiple video streams to be merged into a single file.",
+      description:
+        "Allow multiple video streams to be merged into a single file.",
       incompatibleWith: ["no-video-multistreams"],
     },
     {
@@ -1512,7 +1587,8 @@ export const commandData: CommandCategory = {
       name: "No Video Multistreams (default)",
       flag: "--no-video-multistreams",
       type: "boolean",
-      description: "Only one video stream is downloaded for each output file (default).",
+      description:
+        "Only one video stream is downloaded for each output file (default).",
       incompatibleWith: ["video-multistreams"],
     },
     {
@@ -1520,7 +1596,8 @@ export const commandData: CommandCategory = {
       name: "Allow Audio Multistreams",
       flag: "--audio-multistreams",
       type: "boolean",
-      description: "Allow multiple audio streams to be merged into a single file.",
+      description:
+        "Allow multiple audio streams to be merged into a single file.",
       incompatibleWith: ["no-audio-multistreams"],
     },
     {
@@ -1528,7 +1605,8 @@ export const commandData: CommandCategory = {
       name: "No Audio Multistreams (default)",
       flag: "--no-audio-multistreams",
       type: "boolean",
-      description: "Only one audio stream is downloaded for each output file (default).",
+      description:
+        "Only one audio stream is downloaded for each output file (default).",
       incompatibleWith: ["audio-multistreams"],
     },
     {
@@ -1536,7 +1614,8 @@ export const commandData: CommandCategory = {
       name: "Prefer free formats",
       flag: "--prefer-free-formats",
       type: "boolean",
-      description: 'Prefer video formats with free containers over non-free ones of same quality. Use with "-S ext" for strict preference.',
+      description:
+        'Prefer video formats with free containers over non-free ones of same quality. Use with "-S ext" for strict preference.',
       incompatibleWith: ["no-prefer-free-formats"],
     },
     {
@@ -1544,7 +1623,8 @@ export const commandData: CommandCategory = {
       name: "No prefer free formats (default)",
       flag: "--no-prefer-free-formats",
       type: "boolean",
-      description: "Don't give any special preference to free containers (default).",
+      description:
+        "Don't give any special preference to free containers (default).",
       incompatibleWith: ["prefer-free-formats"],
     },
     {
@@ -1552,7 +1632,8 @@ export const commandData: CommandCategory = {
       name: "List available formats (-F)",
       flag: "--list-formats",
       type: "boolean",
-      description: "List available formats of each video. Simulates unless --no-simulate is used.",
+      description:
+        "List available formats of each video. Simulates unless --no-simulate is used.",
       infoCommand: true,
     },
     {
@@ -1570,7 +1651,8 @@ export const commandData: CommandCategory = {
       name: "Check formats are downloadable",
       flag: "--check-formats",
       type: "boolean",
-      description: "Make sure formats are selected only from those that are actually downloadable.",
+      description:
+        "Make sure formats are selected only from those that are actually downloadable.",
       incompatibleWith: ["no-check-formats"],
     },
     {
@@ -1578,7 +1660,8 @@ export const commandData: CommandCategory = {
       name: "Check all formats are downloadable",
       flag: "--check-all-formats",
       type: "boolean",
-      description: "Check all formats for whether they are actually downloadable.",
+      description:
+        "Check all formats for whether they are actually downloadable.",
       incompatibleWith: ["no-check-formats"], // Implies check-formats logic too
     },
     {
@@ -1586,7 +1669,8 @@ export const commandData: CommandCategory = {
       name: "No check formats (default)",
       flag: "--no-check-formats",
       type: "boolean",
-      description: "Do not check that the formats are actually downloadable (default).",
+      description:
+        "Do not check that the formats are actually downloadable (default).",
       incompatibleWith: ["check-formats", "check-all-formats"],
     },
   ],
@@ -1628,7 +1712,8 @@ export const commandData: CommandCategory = {
       name: "List available subtitles",
       flag: "--list-subs",
       type: "boolean",
-      description: "List available subtitles of each video. Simulates unless --no-simulate is used.",
+      description:
+        "List available subtitles of each video. Simulates unless --no-simulate is used.",
       infoCommand: true,
     },
     {
@@ -1636,7 +1721,8 @@ export const commandData: CommandCategory = {
       name: "Subtitle format",
       flag: "--sub-format",
       type: "string", // Help says "accepts formats preference separated by /"
-      description: 'Subtitle format; accepts formats preference separated by "/", e.g. "srt" or "ass/srt/best".',
+      description:
+        'Subtitle format; accepts formats preference separated by "/", e.g. "srt" or "ass/srt/best".',
       placeholder: "FORMAT", // e.g. srt or ass/srt/best
       example: "srt",
     },
@@ -1665,7 +1751,8 @@ export const commandData: CommandCategory = {
       name: "Password (-p)",
       flag: "--password",
       type: "string",
-      description: "Account password. If left out, yt-dlp will ask interactively.",
+      description:
+        "Account password. If left out, yt-dlp will ask interactively.",
       placeholder: "PASSWORD",
     },
     {
@@ -1688,7 +1775,8 @@ export const commandData: CommandCategory = {
       name: "Netrc location",
       flag: "--netrc-location",
       type: "string",
-      description: "Location of .netrc authentication data; path or containing directory. Defaults to ~/.netrc.",
+      description:
+        "Location of .netrc authentication data; path or containing directory. Defaults to ~/.netrc.",
       placeholder: "PATH",
       example: "~/.netrc",
     },
@@ -1697,7 +1785,8 @@ export const commandData: CommandCategory = {
       name: "Netrc command",
       flag: "--netrc-cmd",
       type: "string",
-      description: "Command to execute to get the credentials for an extractor.",
+      description:
+        "Command to execute to get the credentials for an extractor.",
       placeholder: "NETRC_CMD",
     },
     {
@@ -1713,7 +1802,8 @@ export const commandData: CommandCategory = {
       name: "Adobe Pass MSO (TV provider)",
       flag: "--ap-mso",
       type: "string",
-      description: "Adobe Pass multiple-system operator (TV provider) identifier. Use --ap-list-mso for list.",
+      description:
+        "Adobe Pass multiple-system operator (TV provider) identifier. Use --ap-list-mso for list.",
       placeholder: "MSO",
     },
     {
@@ -1729,7 +1819,8 @@ export const commandData: CommandCategory = {
       name: "Adobe Pass password",
       flag: "--ap-password",
       type: "string",
-      description: "Multiple-system operator account password. If left out, yt-dlp will ask interactively.",
+      description:
+        "Multiple-system operator account password. If left out, yt-dlp will ask interactively.",
       placeholder: "PASSWORD",
     },
     {
@@ -1746,7 +1837,8 @@ export const commandData: CommandCategory = {
       name: "Client certificate file",
       flag: "--client-certificate",
       type: "string",
-      description: "Path to client certificate file in PEM format. May include private key.",
+      description:
+        "Path to client certificate file in PEM format. May include private key.",
       placeholder: "CERTFILE",
     },
     {
@@ -1762,7 +1854,8 @@ export const commandData: CommandCategory = {
       name: "Client certificate password",
       flag: "--client-certificate-password",
       type: "string",
-      description: "Password for client certificate private key, if encrypted. Asks interactively if not provided.",
+      description:
+        "Password for client certificate private key, if encrypted. Asks interactively if not provided.",
       placeholder: "PASSWORD",
     },
   ],
@@ -1772,7 +1865,8 @@ export const commandData: CommandCategory = {
       name: "Extract audio (-x)",
       flag: "--extract-audio",
       type: "boolean",
-      description: "Convert video files to audio-only files (requires ffmpeg/ffprobe).",
+      description:
+        "Convert video files to audio-only files (requires ffmpeg/ffprobe).",
     },
     {
       id: "audio-format",
@@ -1809,7 +1903,8 @@ export const commandData: CommandCategory = {
       name: "Re-encode video format",
       flag: "--recode-video",
       type: "string", // Was select, help implies string
-      description: "Re-encode video to another format if necessary. Syntax and formats same as --remux-video.",
+      description:
+        "Re-encode video to another format if necessary. Syntax and formats same as --remux-video.",
       placeholder: "FORMAT",
       example: "mp4",
     },
@@ -1828,7 +1923,8 @@ export const commandData: CommandCategory = {
       name: "Keep intermediate video file (-k)",
       flag: "--keep-video",
       type: "boolean",
-      description: "Keep the intermediate video file on disk after post-processing.",
+      description:
+        "Keep the intermediate video file on disk after post-processing.",
       incompatibleWith: ["no-keep-video"],
     },
     {
@@ -1836,7 +1932,8 @@ export const commandData: CommandCategory = {
       name: "Delete intermediate video file (default)",
       flag: "--no-keep-video",
       type: "boolean",
-      description: "Delete the intermediate video file after post-processing (default).",
+      description:
+        "Delete the intermediate video file after post-processing (default).",
       incompatibleWith: ["keep-video"],
     },
     {
@@ -1860,7 +1957,8 @@ export const commandData: CommandCategory = {
       name: "Embed subtitles",
       flag: "--embed-subs",
       type: "boolean",
-      description: "Embed subtitles in the video (only for mp4, webm, mkv videos).",
+      description:
+        "Embed subtitles in the video (only for mp4, webm, mkv videos).",
       incompatibleWith: ["no-embed-subs"],
     },
     {
@@ -1892,7 +1990,8 @@ export const commandData: CommandCategory = {
       name: "Embed metadata (Alias: --add-metadata)",
       flag: "--embed-metadata",
       type: "boolean",
-      description: "Embed metadata to video. Also embeds chapters/infojson if present unless --no-embed-chapters/--no-embed-info-json.",
+      description:
+        "Embed metadata to video. Also embeds chapters/infojson if present unless --no-embed-chapters/--no-embed-info-json.",
       incompatibleWith: ["no-embed-metadata"],
     },
     {
@@ -1924,7 +2023,8 @@ export const commandData: CommandCategory = {
       name: "Embed info.json (mkv/mka only)",
       flag: "--embed-info-json",
       type: "boolean",
-      description: "Embed the infojson as an attachment to mkv/mka video files.",
+      description:
+        "Embed the infojson as an attachment to mkv/mka video files.",
       incompatibleWith: ["no-embed-info-json"],
     },
     {
@@ -1932,7 +2032,8 @@ export const commandData: CommandCategory = {
       name: "Do not embed info.json (default)",
       flag: "--no-embed-info-json",
       type: "boolean",
-      description: "Do not embed the infojson as an attachment to the video file (default).",
+      description:
+        "Do not embed the infojson as an attachment to the video file (default).",
       incompatibleWith: ["embed-info-json"],
     },
     {
@@ -1960,7 +2061,8 @@ export const commandData: CommandCategory = {
       name: "Write metadata to xattrs",
       flag: "--xattrs",
       type: "boolean",
-      description: "Write metadata to the video file's xattrs (using Dublin Core and XDG standards).",
+      description:
+        "Write metadata to the video file's xattrs (using Dublin Core and XDG standards).",
     },
     {
       id: "concat-playlist",
@@ -1994,7 +2096,8 @@ export const commandData: CommandCategory = {
       name: "FFmpeg binary location",
       flag: "--ffmpeg-location",
       type: "string",
-      description: "Location of the ffmpeg binary; either the path to the binary or its containing directory.",
+      description:
+        "Location of the ffmpeg binary; either the path to the binary or its containing directory.",
       placeholder: "PATH",
       example: "/usr/bin/ffmpeg",
     },
@@ -2004,7 +2107,7 @@ export const commandData: CommandCategory = {
       flag: "--exec",
       type: "string",
       description:
-        'Execute CMD. Optional WHEN: prefix (default: after_move). Output template syntax for args. If no fields passed, %(filepath,_filename|)q appended. Multiple uses.',
+        "Execute CMD. Optional WHEN: prefix (default: after_move). Output template syntax for args. If no fields passed, %(filepath,_filename|)q appended. Multiple uses.",
       placeholder: "[WHEN:]CMD",
       example: "after_move:echo {} was downloaded to %(filepath)q",
     },
@@ -2020,7 +2123,8 @@ export const commandData: CommandCategory = {
       name: "Convert subtitles format (Alias: --convert-subtitles)",
       flag: "--convert-subs",
       type: "string",
-      description: 'Convert subtitles to another format (ass, lrc, srt, vtt). Use "none" to disable (default).',
+      description:
+        'Convert subtitles to another format (ass, lrc, srt, vtt). Use "none" to disable (default).',
       placeholder: "FORMAT", // e.g., "srt" or "none"
       example: "srt",
     },
@@ -2029,7 +2133,8 @@ export const commandData: CommandCategory = {
       name: "Split video by chapters",
       flag: "--split-chapters",
       type: "boolean",
-      description: 'Split video into multiple files based on internal chapters. Use "chapter:" prefix in --output.',
+      description:
+        'Split video into multiple files based on internal chapters. Use "chapter:" prefix in --output.',
       incompatibleWith: ["no-split-chapters"],
     },
     {
@@ -2045,7 +2150,8 @@ export const commandData: CommandCategory = {
       name: "Remove chapters by REGEX",
       flag: "--remove-chapters",
       type: "string",
-      description: "Remove chapters whose title matches REGEX. Same syntax as --download-sections. Multiple uses allowed.",
+      description:
+        "Remove chapters whose title matches REGEX. Same syntax as --download-sections. Multiple uses allowed.",
       placeholder: "REGEX",
       example: "^Sponsor",
     },
@@ -2071,7 +2177,8 @@ export const commandData: CommandCategory = {
       name: "No force keyframes at cuts (default)",
       flag: "--no-force-keyframes-at-cuts",
       type: "boolean",
-      description: "Do not force keyframes around chapters when cutting/splitting (default).",
+      description:
+        "Do not force keyframes around chapters when cutting/splitting (default).",
       incompatibleWith: ["force-keyframes-at-cuts"],
     },
     {
@@ -2121,14 +2228,16 @@ export const commandData: CommandCategory = {
       name: "Disable SponsorBlock",
       flag: "--no-sponsorblock",
       type: "boolean",
-      description: "Disable both --sponsorblock-mark and --sponsorblock-remove.",
+      description:
+        "Disable both --sponsorblock-mark and --sponsorblock-remove.",
     },
     {
       id: "sponsorblock-api",
       name: "SponsorBlock API URL",
       flag: "--sponsorblock-api",
       type: "string",
-      description: "SponsorBlock API location (default: https://sponsor.ajay.app).",
+      description:
+        "SponsorBlock API location (default: https://sponsor.ajay.app).",
       placeholder: "URL",
       example: "https://sponsor.ajay.app",
     },
@@ -2139,7 +2248,8 @@ export const commandData: CommandCategory = {
       name: "Extractor retries",
       flag: "--extractor-retries",
       type: "string", // number or "infinite"
-      description: 'Number of retries for known extractor errors (default is 3), or "infinite".',
+      description:
+        'Number of retries for known extractor errors (default is 3), or "infinite".',
       placeholder: "RETRIES",
       example: "5",
     },
@@ -2164,7 +2274,8 @@ export const commandData: CommandCategory = {
       name: "Split HLS at discontinuities",
       flag: "--hls-split-discontinuity",
       type: "boolean",
-      description: "Split HLS playlists to different formats at discontinuities (e.g. ad breaks).",
+      description:
+        "Split HLS playlists to different formats at discontinuities (e.g. ad breaks).",
       incompatibleWith: ["no-hls-split-discontinuity"],
     },
     {
@@ -2172,7 +2283,8 @@ export const commandData: CommandCategory = {
       name: "No HLS split at discontinuities (default)",
       flag: "--no-hls-split-discontinuity",
       type: "boolean",
-      description: "Do not split HLS playlists into different formats at discontinuities (default).",
+      description:
+        "Do not split HLS playlists into different formats at discontinuities (default).",
       incompatibleWith: ["hls-split-discontinuity"],
     },
     {
@@ -2180,7 +2292,8 @@ export const commandData: CommandCategory = {
       name: "Extractor arguments",
       flag: "--extractor-args",
       type: "string",
-      description: 'Pass ARGS arguments to IE_KEY extractor. See "EXTRACTOR ARGUMENTS". Multiple uses allowed.',
+      description:
+        'Pass ARGS arguments to IE_KEY extractor. See "EXTRACTOR ARGUMENTS". Multiple uses allowed.',
       placeholder: "IE_KEY:ARGS",
       example: "youtube:player_client=android",
     },
