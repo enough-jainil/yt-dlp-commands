@@ -5,6 +5,7 @@ import { ThemeProvider } from "next-themes";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import ToasterClient from "@/components/toaster-client";
+import { ErrorBoundary } from "@/components/error-boundary";
 import siteConfig from "@/lib/config";
 import { GoogleAnalytics } from "@next/third-parties/google";
 
@@ -76,13 +77,15 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <div className="relative flex min-h-screen flex-col">
-            <Header />
-            <main className="flex-1 px-2 md:px-3 max-w-7xl mx-auto w-full">
-              {children}
-            </main>
-            <Footer />
-          </div>
+          <ErrorBoundary>
+            <div className="relative flex min-h-screen flex-col">
+              <Header />
+              <main className="flex-1 px-2 md:px-3 max-w-7xl mx-auto w-full">
+                {children}
+              </main>
+              <Footer />
+            </div>
+          </ErrorBoundary>
         </ThemeProvider>
         <ToasterClient />
         <GoogleAnalytics gaId="G-TRW3K4EK2X" />

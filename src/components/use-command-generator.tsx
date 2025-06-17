@@ -35,7 +35,7 @@ export function useCommandGenerator() {
             ...parsedSettings,
           };
         }
-        localStorage.setItem(localStorageKey,JSON.stringify(DEFAULT_SETTINGS));
+        localStorage.setItem(localStorageKey, JSON.stringify(DEFAULT_SETTINGS));
       } catch (error) {
         console.error("Error loading/saving settings:", error);
       }
@@ -48,7 +48,7 @@ export function useCommandGenerator() {
       try {
         localStorage.setItem("localSettings_v1", JSON.stringify(localSettings));
       } catch (error) {
-        console.error("Error saving settings:", error)
+        console.error("Error saving settings:", error);
       }
     }
   }, [localSettings]);
@@ -95,21 +95,34 @@ export function useCommandGenerator() {
         const newCommands = { ...prev };
         const commandInfo = findCommandById(commandId);
 
-        if (value === undefined || value === false || value === null || (typeof value === 'string' && value.trim() === '')) {
+        if (
+          value === undefined ||
+          value === false ||
+          value === null ||
+          (typeof value === "string" && value.trim() === "")
+        ) {
           delete newCommands[commandId];
         } else {
           newCommands[commandId] = value;
         }
 
         // Handle incompatibilities proactively
-        if (commandInfo && commandInfo.incompatibleWith && newCommands[commandId]) {
-            commandInfo.incompatibleWith.forEach(incompatibleId => {
-                if (newCommands[incompatibleId]) {
-                    delete newCommands[incompatibleId];
-                    const incompatibleCmd = findCommandById(incompatibleId);
-                    toast.info(`Deselected "${incompatibleCmd?.name || incompatibleId}" due to incompatibility with "${commandInfo.name}".`);
-                }
-            });
+        if (
+          commandInfo &&
+          commandInfo.incompatibleWith &&
+          newCommands[commandId]
+        ) {
+          commandInfo.incompatibleWith.forEach((incompatibleId) => {
+            if (newCommands[incompatibleId]) {
+              delete newCommands[incompatibleId];
+              const incompatibleCmd = findCommandById(incompatibleId);
+              toast.info(
+                `Deselected "${
+                  incompatibleCmd?.name || incompatibleId
+                }" due to incompatibility with "${commandInfo.name}".`
+              );
+            }
+          });
         }
         return newCommands;
       });
@@ -117,31 +130,33 @@ export function useCommandGenerator() {
     [findCommandById]
   );
 
-  const handleModeChange = useCallback((newMode: CommandMode) => {
-    setSelectedCommands((prevSelected) => {
-      const newSelected = { ...prevSelected };
-      Object.keys(newSelected).forEach((commandId) => {
-        const cmd = findCommandById(commandId);
-        if (cmd) {
-          if (
-            (newMode === "url" && cmd.utilityOnly === true) ||
-            (newMode === "utility" && cmd.requiresUrl === true) ||
-            (newMode === "info" && !cmd.infoCommand)
-          ) {
-            delete newSelected[commandId];
+  const handleModeChange = useCallback(
+    (newMode: CommandMode) => {
+      setSelectedCommands((prevSelected) => {
+        const newSelected = { ...prevSelected };
+        Object.keys(newSelected).forEach((commandId) => {
+          const cmd = findCommandById(commandId);
+          if (cmd) {
+            if (
+              (newMode === "url" && cmd.utilityOnly === true) ||
+              (newMode === "utility" && cmd.requiresUrl === true) ||
+              (newMode === "info" && !cmd.infoCommand)
+            ) {
+              delete newSelected[commandId];
+            }
           }
-        }
+        });
+        return newSelected;
       });
-      return newSelected;
-    });
 
-    setMode(newMode);
-    // Only clear URL if switching away from modes that use URL
-    if (newMode === "utility") {
-      setUrl("");
-    }
-  }, [findCommandById]);
-
+      setMode(newMode);
+      // Only clear URL if switching away from modes that use URL
+      if (newMode === "utility") {
+        setUrl("");
+      }
+    },
+    [findCommandById]
+  );
 
   // Validation Logic
   useEffect(() => {
@@ -180,7 +195,6 @@ export function useCommandGenerator() {
       return cmd && !cmd.infoCommand;
     });
 
-
     // 2. Mode-specific validation
     switch (mode) {
       case "url":
@@ -188,20 +202,28 @@ export function useCommandGenerator() {
           errors.push("Utility-only commands cannot be used in URL mode.");
         }
         // A URL is generally expected if any non-utility command is selected.
-        const anyNonUtilityCommandSelected = selectedCommandIds.some(id => {
-            const cmd = findCommandById(id);
-            return cmd && cmd.utilityOnly !== true;
+        const anyNonUtilityCommandSelected = selectedCommandIds.some((id) => {
+          const cmd = findCommandById(id);
+          return cmd && cmd.utilityOnly !== true;
         });
-        if (!url.trim() && selectedCommandIds.length > 0 && anyNonUtilityCommandSelected) {
+        if (
+          !url.trim() &&
+          selectedCommandIds.length > 0 &&
+          anyNonUtilityCommandSelected
+        ) {
           errors.push("URL is required for the selected commands in URL mode.");
         }
         break;
       case "utility":
         if (hasCommandsThatExplicitlyNeedUrl) {
-          errors.push("Commands that require a URL cannot be used in utility mode.");
+          errors.push(
+            "Commands that require a URL cannot be used in utility mode."
+          );
         }
         if (url.trim()) {
-          errors.push("URL should not be provided in utility mode (it will be ignored).");
+          errors.push(
+            "URL should not be provided in utility mode (it will be ignored)."
+          );
         }
         break;
       case "info":
@@ -215,14 +237,15 @@ export function useCommandGenerator() {
         // In "all" mode, we are more permissive and allow all combinations
         // Only validate critical requirements
         if (hasCommandsThatExplicitlyNeedUrl && !url.trim()) {
-          errors.push("URL is required because at least one selected command explicitly needs it.");
+          errors.push(
+            "URL is required because at least one selected command explicitly needs it."
+          );
         }
         // Allow mixing of all command types in "all" mode
         break;
     }
     setValidationErrors(errors);
   }, [selectedCommands, url, mode, findCommandById]);
-
 
   // Command Generation Logic
   const generateCommand = useCallback(() => {
@@ -232,18 +255,24 @@ export function useCommandGenerator() {
     // These are applied *before* other selected commands
     const commandsToProcess: CommandState = {};
     if (localSettings.downloadPath) {
-        commandsToProcess["paths"] = localSettings.downloadPath;
+      commandsToProcess["paths"] = localSettings.downloadPath;
     }
     if (localSettings.ffmpegPath) {
-        commandsToProcess["ffmpeg-location"] = localSettings.ffmpegPath;
+      commandsToProcess["ffmpeg-location"] = localSettings.ffmpegPath;
     }
     // Merge with user-selected commands, user selections take precedence if keys overlap
     // (though 'paths' and 'ffmpeg-location' are unique enough this shouldn't be an issue)
     Object.assign(commandsToProcess, selectedCommands);
 
-
-    const isWindows = typeof navigator !== "undefined" && navigator.platform.toLowerCase().includes("win");
-    const isPowerShell = typeof window !== "undefined" && isWindows && window.navigator.userAgent.includes("PowerShell");
+    const isWindows =
+      typeof window !== "undefined" &&
+      typeof navigator !== "undefined" &&
+      navigator.platform.toLowerCase().includes("win");
+    const isPowerShell =
+      typeof window !== "undefined" &&
+      typeof navigator !== "undefined" &&
+      isWindows &&
+      navigator.userAgent.includes("PowerShell");
 
     Object.entries(commandsToProcess).forEach(([commandId, value]) => {
       const commandInfo = findCommandById(commandId);
@@ -263,7 +292,12 @@ export function useCommandGenerator() {
 
       if (typeof value === "boolean" && value) {
         commandStr += ` ${commandInfo.flag}`;
-      } else if (value !== null && value !== undefined && value !== "" && typeof value !== 'boolean') {
+      } else if (
+        value !== null &&
+        value !== undefined &&
+        value !== "" &&
+        typeof value !== "boolean"
+      ) {
         // Ensure value is treated as string for processing quotes and templates
         const valueStr = String(value);
         const containsTemplateVars = valueStr.includes("%(");
@@ -281,13 +315,12 @@ export function useCommandGenerator() {
     });
 
     // Add URL intelligently based on mode and selected commands
-    const shouldAddUrl = url.trim() &&
-      (
-        mode === "url" ||
+    const shouldAddUrl =
+      url.trim() &&
+      (mode === "url" ||
         mode === "all" || // Always consider URL in "all" mode if provided
-        (mode === "info" && Object.keys(selectedCommands).length > 0) // Add URL for info mode if commands are selected
-                                                                     // as some info commands take a URL.
-      );
+        (mode === "info" && Object.keys(selectedCommands).length > 0)); // Add URL for info mode if commands are selected
+    // as some info commands take a URL.
 
     if (shouldAddUrl) {
       commandStr += ` "${url.trim()}"`;
@@ -297,12 +330,14 @@ export function useCommandGenerator() {
     if (isPowerShell && commandStr.includes(" -o ")) {
       // This regex tries to find -o followed by an unquoted value containing %(...)
       // and quotes it. It's a bit simplistic and might need refinement for complex cases.
-      commandStr = commandStr.replace(/-o\s+([^"'].*?%\(.*?\).*?)(?=\s|$)/g, (match, p1) => `-o "${p1.replace(/"/g, '""')}"`);
+      commandStr = commandStr.replace(
+        /-o\s+([^"'].*?%\(.*?\).*?)(?=\s|$)/g,
+        (match, p1) => `-o "${p1.replace(/"/g, '""')}"`
+      );
     }
 
     commandStr = commandStr.replace(/\s+/g, " ").trim();
     setFinalCommand(commandStr);
-
   }, [
     selectedCommands,
     url,
@@ -322,11 +357,10 @@ export function useCommandGenerator() {
     }
   }, [validationErrors, selectedCommands, url, mode, generateCommand]);
 
-
   const copyToClipboard = useCallback(() => {
     if (!finalCommand) {
-        toast.error("Nothing to copy.");
-        return;
+      toast.error("Nothing to copy.");
+      return;
     }
     if (navigator.clipboard && navigator.clipboard.writeText) {
       navigator.clipboard
@@ -372,25 +406,28 @@ export function useCommandGenerator() {
     toast.info("Selections cleared.");
   }, []);
 
-  const applyTemplate = useCallback((template: CommandState) => {
-    // Before applying, clear incompatible commands from the template based on the current mode
-    const newTemplateState: CommandState = { ...template };
-    Object.keys(newTemplateState).forEach(commandId => {
+  const applyTemplate = useCallback(
+    (template: CommandState) => {
+      // Before applying, clear incompatible commands from the template based on the current mode
+      const newTemplateState: CommandState = { ...template };
+      Object.keys(newTemplateState).forEach((commandId) => {
         const cmd = findCommandById(commandId);
         if (cmd) {
-            if (
-                (mode === "url" && cmd.utilityOnly === true) ||
-                (mode === "utility" && cmd.requiresUrl === true) ||
-                (mode === "info" && !cmd.infoCommand)
-                // No filtering for "all" mode - allow all commands
-            ) {
-                delete newTemplateState[commandId];
-            }
+          if (
+            (mode === "url" && cmd.utilityOnly === true) ||
+            (mode === "utility" && cmd.requiresUrl === true) ||
+            (mode === "info" && !cmd.infoCommand)
+            // No filtering for "all" mode - allow all commands
+          ) {
+            delete newTemplateState[commandId];
+          }
         }
-    });
-    setSelectedCommands(newTemplateState);
-    toast.success("Template applied!");
-  }, [mode, findCommandById]);
+      });
+      setSelectedCommands(newTemplateState);
+      toast.success("Template applied!");
+    },
+    [mode, findCommandById]
+  );
 
   return {
     mode,

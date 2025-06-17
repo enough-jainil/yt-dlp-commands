@@ -74,6 +74,10 @@ export default function CommandGenerator() {
                   onChange={(e) => setUrl(e.target.value)}
                   className="w-full pr-10 border-muted-foreground/30 focus:border-primary focus:ring-2 focus:ring-primary/50 transition-all duration-200"
                   type="url"
+                  aria-label={
+                    mode === "all" ? "Video URL (Optional)" : "Video URL"
+                  }
+                  aria-required={mode === "url" ? "true" : "false"}
                 />
               </div>
 
