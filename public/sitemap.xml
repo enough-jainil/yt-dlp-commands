@@ -1,53 +1,69 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:news="http://www.google.com/schemas/sitemap-news/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" xmlns:mobile="http://www.google.com/schemas/sitemap-mobile/1.0" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:video="http://www.google.com/schemas/sitemap-video/1.1">
   <url>
-    <loc>https://ytdlp.toolbrew.org/</loc>
+    <loc>http://ytdlp.memoryview.in/</loc>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
+    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
   </url>
   <url>
-    <loc>https://ytdlp.toolbrew.org/commands</loc>
+    <loc>http://ytdlp.memoryview.in/commands</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
   </url>
   <url>
-    <loc>https://ytdlp.toolbrew.org/download</loc>
+    <loc>http://ytdlp.memoryview.in/download</loc>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
   </url>
   <url>
-    <loc>https://ytdlp.toolbrew.org/guides/windows</loc>
+    <loc>http://ytdlp.memoryview.in/examples</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.7</priority>
+    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
+  </url>
+  <url>
+    <loc>http://ytdlp.memoryview.in/guides/windows</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
   </url>
   <url>
-    <loc>https://ytdlp.toolbrew.org/guides/macos</loc>
+    <loc>http://ytdlp.memoryview.in/guides/macos</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
   </url>
   <url>
-    <loc>https://ytdlp.toolbrew.org/guides/linux</loc>
+    <loc>http://ytdlp.memoryview.in/guides/linux</loc>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
+    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
   </url>
   <url>
-    <loc>https://ytdlp.toolbrew.org/guides/android</loc>
+    <loc>http://ytdlp.memoryview.in/guides/android</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
   </url>
   <url>
-    <loc>https://ytdlp.toolbrew.org/guides/ios</loc>
+    <loc>http://ytdlp.memoryview.in/guides/ios</loc>
     <changefreq>monthly</changefreq>
     <priority>0.6</priority>
+    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
   </url>
   <url>
-    <loc>https://ytdlp.toolbrew.org/guides/usage</loc>
+    <loc>http://ytdlp.memoryview.in/guides/usage</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
   </url>
   <url>
-    <loc>https://ytdlp.toolbrew.org/guides/configuration</loc>
+    <loc>http://ytdlp.memoryview.in/guides/configuration</loc>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <lastmod>2024-01-01T00:00:00+00:00</lastmod>
   </url>
 </urlset>
